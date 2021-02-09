@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ca.ceci</groupId>
+  <artifactId>ics4u_loop_nelson_162</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>ICS4U_Loop_Nelson</name>
+  
+  <!--
+ 	Project batch created by T. Fuller
+	and batch uploaded to GitHub
+	
+	scripts: 
+	gitlabRepoMaker
+	gitlabRepoMakerBatch
+	
+	scripts are in gitlab repository
+
+  -->
+  
+</project>
