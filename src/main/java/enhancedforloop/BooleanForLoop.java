@@ -15,7 +15,7 @@ public class BooleanForLoop {
 	}
 
 	/*
-	 * Print out the boolArray using enhanced for loop
+	 * Print out the boolArray using enhanced for loop.
 	 */
 	private void print() {
 		for (Boolean b : boolArray) {
