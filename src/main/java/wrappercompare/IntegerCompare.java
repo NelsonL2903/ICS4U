@@ -15,7 +15,7 @@ public class IntegerCompare {
 
 		Integer aa = 424242;
 		Integer bb = 424242;
-//Test
+
 		System.out.println("aa = " + aa + " bb = " + bb);
 		if (aa == bb) {
 			System.out.println("a == b using == comparator");
