@@ -29,7 +29,7 @@ public class LinearStringSearch {
 		ls.dump();
 
 		// get the string to search for from the keyboard
-		System.out.println("Please enter the 5 letter string you would like to search for");
+		System.out.println("Please enter the string you would like to search for");
 		String searchString = keyboard.nextLine();
 
 		// Call the find method of the LinearStringSearch class.
@@ -61,7 +61,13 @@ public class LinearStringSearch {
 		Random ran = new Random();
 		for (int i = 0; i < array.length; ++i) {
 			String randomString = "";
-			for (int j = 0; j < stringLength; ++j) {
+			
+			Random randomGenerator = new Random();
+			int low = 1;
+			int high = stringLength + 1;
+			int newSL = randomGenerator.nextInt(high - low) + low;
+			
+			for (int j = 0; j < newSL; ++j) {
 				char c = (char) (ran.nextInt(26) + 65);
 				// The number 65 represents the character A, while the 26 tells the computer to pick from the next 26 letters,
 				// which would be A-Z
