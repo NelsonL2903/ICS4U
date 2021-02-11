@@ -21,6 +21,7 @@ public class LinearSearch {
 
 		int searchInt;
 		// get searchInt from keyboard
+		//this is a test from laptop
 		System.out.println("Please enter the integer you would like to search for");
 		searchInt = keyboard.nextInt();
 
