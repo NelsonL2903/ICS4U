@@ -38,7 +38,7 @@ public class LinearSearch {
 
 		Random rand = new Random();
 		for (int i = 0; i < arraySize; ++i) {
-			array[i] = rand.nextInt(101);
+			array[i] = rand.nextInt(arraySize + 1);
 		}
 
 	}
