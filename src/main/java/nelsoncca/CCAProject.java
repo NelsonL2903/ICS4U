@@ -50,17 +50,15 @@ public class CCAProject extends SimpleApplication {
 		
 		rootNode.attachChild(playerNode);
 		playerNode.attachChild(barrel);
+		playerNode.rotate(-0.0125f, -0.1f, 0);
 		
 	}
 	
 	public void simpleUpdate(float tpf) {
 		
-		playerNode.setLocalRotation(cam.getRotation());
-		barrel.setLocalTranslation(cam.getLocation().getX()-15,cam.getLocation().getY()-25,cam.getLocation().getZ()+21);
-		handle.setLocalTranslation(cam.getLocation().getX()-15,cam.getLocation().getY()-26,cam.getLocation().getZ()+21);
-		
-		System.out.println(cam.getRotation());
-		System.out.println(playerNode.getLocalRotation());
+		playerNode.setLocalTranslation(cam.getLocation());
+		barrel.setLocalTranslation(playerNode.getLocalTranslation().getX()-15,playerNode.getLocalTranslation().getY()-25,playerNode.getLocalTranslation().getZ()+21);
+		handle.setLocalTranslation(playerNode.getLocalTranslation().getX()-15,playerNode.getLocalTranslation().getY()-26,playerNode.getLocalTranslation().getZ()+21);
 		
 	}
 
