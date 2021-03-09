@@ -142,11 +142,12 @@ public class CCAProject extends SimpleApplication {
         geometry.setMaterial(bmat);
         rootNode.attachChild(geometry);
         
-        Cylinder bullet = new Cylinder(50, 20, 0.025f, 0.35f, true);
-        Geometry bg = new Geometry("Cylinder", bullet);
-        Material bm = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        bm.setColor("Color", ColorRGBA.Blue);
-        bg.setMaterial(bm);
+        line2 = new Line(new Vector3f(cam.getLocation()), new Vector3f(cam.getDirection().getX()/160f, cam.getDirection().getY()/160f, cam.getDirection().getZ()/160f));
+		line2.setLineWidth(2000);
+        Geometry bg = new Geometry("Bullet", line2);
+        Material bmat2 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        bmat2.setColor("Color", ColorRGBA.Blue);
+        bg.setMaterial(bmat2);
         rootNode.attachChild(bg);
         
 	}
