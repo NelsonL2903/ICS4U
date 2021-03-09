@@ -1,6 +1,5 @@
 package nelsoncca;
 
-import org.apache.commons.math3.geometry.spherical.twod.Circle;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
@@ -9,6 +8,8 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Cylinder;
+import com.jme3.scene.shape.Line;
 import com.jme3.ui.*;
 
 public class CCAProject extends SimpleApplication {
@@ -20,6 +21,8 @@ public class CCAProject extends SimpleApplication {
 	float x;
 	float y;
 	float z;
+	Line line;
+	Line line2;
 	
 	public static void main(final String[] args) {
 		final CCAProject app = new CCAProject();
@@ -131,8 +134,25 @@ public class CCAProject extends SimpleApplication {
 		getCamera().lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
 		cam.lookAtDirection(new Vector3f(0,0,-10), new Vector3f(0,0,0));
 		
+		line = new Line(new Vector3f(cam.getLocation()), new Vector3f(cam.getDirection()));
+		line.setLineWidth(200);
+        Geometry geometry = new Geometry("Bullet", line);
+        Material bmat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        bmat.setColor("Color", ColorRGBA.Blue);
+        geometry.setMaterial(bmat);
+        rootNode.attachChild(geometry);
+        
+        Cylinder bullet = new Cylinder(50, 20, 0.025f, 0.35f, true);
+        Geometry bg = new Geometry("Cylinder", bullet);
+        Material bm = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        bm.setColor("Color", ColorRGBA.Blue);
+        bg.setMaterial(bm);
+        rootNode.attachChild(bg);
+        
 	}
 	
+	
+
 	public void simpleUpdate(float tpf) {
 		cam.setLocation(new Vector3f(cam.getLocation().getX(), 0f, cam.getLocation().getZ()));
 		
@@ -151,7 +171,11 @@ public class CCAProject extends SimpleApplication {
 		if (cam.getLocation().getZ() > 8) {
 			cam.setLocation(new Vector3f(cam.getLocation().getX(), cam.getLocation().getY(), 7.9f));
 		}
-			
+		
+		line.updatePoints(cam.getLocation(), cam.getDirection());
+		
+		
+		
 	}
 
 }
