@@ -142,13 +142,24 @@ public class CCAProject extends SimpleApplication {
         geometry.setMaterial(bmat);
         rootNode.attachChild(geometry);
         
-        line2 = new Line(new Vector3f(cam.getLocation()), new Vector3f(cam.getDirection().getX()/160f, cam.getDirection().getY()/160f, cam.getDirection().getZ()/160f));
-		line2.setLineWidth(2000);
+        line2 = new Line(new Vector3f(0,0,0), new Vector3f(0.25f,0.25f,0.25f));
+		line2.setLineWidth(20);
         Geometry bg = new Geometry("Bullet", line2);
         Material bmat2 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        bmat2.setTexture("ColorMap", assetManager.loadTexture("foam.jpg"));
         bmat2.setColor("Color", ColorRGBA.Blue);
         bg.setMaterial(bmat2);
         rootNode.attachChild(bg);
+        
+        float xd = cam.getDirection().getX();
+        float yd = cam.getDirection().getY();
+        float zd = cam.getDirection().getZ();
+        float xl = cam.getLocation().getX();
+        float yl = cam.getLocation().getY();
+        float zl = cam.getLocation().getZ();
+        float t;
+        
+        float pex = xl + (xd - xl)*t;
         
 	}
 	
