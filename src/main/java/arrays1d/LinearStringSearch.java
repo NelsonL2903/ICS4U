@@ -103,7 +103,9 @@ public class LinearStringSearch {
 		while(i < array.length && !array[i].equals(searchString)) {
 			++i;
 		}
+		if (i < array.length && array[i].equals(searchString)) {
 		index = i;
+		}
 		return index;
 	}
 
