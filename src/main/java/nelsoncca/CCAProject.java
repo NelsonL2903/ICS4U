@@ -157,9 +157,12 @@ public class CCAProject extends SimpleApplication {
         float xl = cam.getLocation().getX();
         float yl = cam.getLocation().getY();
         float zl = cam.getLocation().getZ();
-        float t;
         
-        float pex = xl + (xd - xl)*t;
+        float xf = xd * 0.025f;
+        float yf = yd * 0.025f;
+        float zf = zd * 0.025f;
+        
+        line2.updatePoints(cam.getLocation(), new Vector3f(-xf, -yf, -zf));
         
 	}
 	
@@ -185,6 +188,7 @@ public class CCAProject extends SimpleApplication {
 		}
 		
 		line.updatePoints(cam.getLocation(), cam.getDirection());
+		
 		
 		
 		
