@@ -56,6 +56,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	int milisecondtens = 0;
 	BitmapText timer;
 	String hit;
+	int i;
 	
 	public static void main(final String[] args) {
 		final CCAProject app = new CCAProject();
@@ -245,10 +246,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			for (int i = 0; i < results.size(); i++) {
 			hit = results.getCollision(i).getGeometry().getName();
 			}
-			switch(hit) {
-			case ("target1"):
-				
-			}
+			hit = results.getCollision(i).getGeometry().setColor("Color", ColorRGBA.Green);
 			if (results.size() > 0) {
 				 CollisionResult closest = results.getClosestCollision();
 				 shot.setLocalTranslation(closest.getContactPoint());
