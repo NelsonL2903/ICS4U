@@ -27,7 +27,6 @@ import com.jme3.ui.*;
 public class CCAProject extends SimpleApplication implements ActionListener{
 	//TODO reload
 	//TODO reload sounds
-	//TODO timer
 	//TODO scoreboard
 	//TODO gun noise
 	//TODO set random positions
@@ -56,6 +55,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	int milisecondones = 0;
 	int milisecondtens = 0;
 	BitmapText timer;
+	String hit;
 	
 	public static void main(final String[] args) {
 		final CCAProject app = new CCAProject();
@@ -203,9 +203,9 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		}
 	}
 	
-	protected Geometry Targetbox(String Target, float x, float y, float z) {
+	protected Geometry Targetbox(String name, float x, float y, float z) {
 	    Box box = new Box(1, 1, 0.025f);
-	    Geometry cube = new Geometry("Target", box);
+	    Geometry cube = new Geometry(name, box);
 	    cube.setLocalTranslation(x, y, z);
 	    Material mat1 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 	    mat1.setTexture("ColorMap", assetManager.loadTexture("target.png"));
@@ -243,7 +243,11 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			Ray ray = new Ray(cam.getLocation(), cam.getDirection());
 			shootables.collideWith(ray, results);
 			for (int i = 0; i < results.size(); i++) {
-			String hit = results.getCollision(i).getGeometry().getName();
+			hit = results.getCollision(i).getGeometry().getName();
+			}
+			switch(hit) {
+			case ("target1"):
+				
 			}
 			if (results.size() > 0) {
 				 CollisionResult closest = results.getClosestCollision();
