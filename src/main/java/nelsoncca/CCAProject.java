@@ -1,18 +1,40 @@
 package nelsoncca;
 
 
+import java.util.concurrent.TimeUnit;
+
 import com.jme3.app.SimpleApplication;
+import com.jme3.collision.CollisionResult;
+import com.jme3.collision.CollisionResults;
+import com.jme3.font.BitmapText;
+import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Cylinder;
 import com.jme3.scene.shape.Line;
+import com.jme3.scene.shape.Sphere;
 import com.jme3.ui.*;
 
-public class CCAProject extends SimpleApplication {
+public class CCAProject extends SimpleApplication implements ActionListener{
+	//TODO reload
+	//TODO reload sounds
+	//TODO timer
+	//TODO scoreboard
+	//TODO gun noise
+	//TODO set random positions
+	//TODO reset option
+	//TODO set colour changes for targets
+	//TODO add controls to hud
+	
 	
 	Geometry barrel;
 	Geometry handle;
@@ -23,6 +45,17 @@ public class CCAProject extends SimpleApplication {
 	float z;
 	Line line;
 	Line line2;
+	Boolean left = false;
+	Boolean lshift = false;
+	Boolean croucht = false;
+	private Node shootables;
+	int secondones = 0;
+	int secondtens = 0;
+	int minuteones = 0;
+	int minutetens = 0;
+	int milisecondones = 0;
+	int milisecondtens = 0;
+	BitmapText timer;
 	
 	public static void main(final String[] args) {
 		final CCAProject app = new CCAProject();
@@ -31,6 +64,15 @@ public class CCAProject extends SimpleApplication {
 
 	@Override
 	public void simpleInitApp() {
+		
+		shootables = new Node("Shootables");
+	    rootNode.attachChild(shootables);
+	    shootables.attachChild(Targetbox("target1", -20f, 0f, -35f));
+	    shootables.attachChild(Targetbox("target2", 15f, -2f, -25f));
+	    shootables.attachChild(Targetbox("target3", 0f, 1f, -55f));
+	    shootables.attachChild(Targetbox("target4", 5f, 10f, -45f));
+		
+		initKeys();
 		
 		flyCam.setMoveSpeed(15);
 		setDisplayStatView(false);
@@ -45,10 +87,18 @@ public class CCAProject extends SimpleApplication {
 		
 		Picture pic2 = new Picture("HUD Picture");
 		pic2.setImage(assetManager, "crosshair.png", true);
-		pic2.setWidth(75);
-		pic2.setHeight(75);
-		pic2.setPosition(915, 500);
+		pic2.setWidth(50);
+		pic2.setHeight(50);
+		pic2.setPosition(935, 515);
 		guiNode.attachChild(pic2);
+		
+		timer = new BitmapText(guiFont, false);
+		timer.setSize(50);
+		timer.setColor(ColorRGBA.White);
+		timer.setText("" + minutetens + minuteones + ":" + secondtens + secondones
+				+ ":" + milisecondtens + milisecondones);
+		timer.setLocalTranslation(300, timer.getLineHeight(), 0);
+		guiNode.attachChild(timer);
 		
 		Box a = new Box(new Vector3f(0,-5,0), 10, 0.5f, 10);
 		Geometry floor = new Geometry("Box", a);
@@ -90,7 +140,7 @@ public class CCAProject extends SimpleApplication {
 		roof.setMaterial(mat5);
 		rootNode.attachChild(roof);
 		
-		Box f = new Box(new Vector3f(0,-3,-10), 10f, 2f, 0.5f);
+		Box f = new Box(new Vector3f(0,-3,-10), 10f, 1f, 0.5f);
 		Geometry counter = new Geometry("Box", f);
 	    Material mat6 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 	    mat6.setTexture("ColorMap", assetManager.loadTexture("counter.jpg"));
@@ -98,7 +148,7 @@ public class CCAProject extends SimpleApplication {
 		counter.setMaterial(mat6);
 		rootNode.attachChild(counter);
 		
-		Box g = new Box(new Vector3f(0,-3,-75), 100f, 100f, 0.5f);
+	/*	Box g = new Box(new Vector3f(0,-3,-75), 100f, 100f, 0.5f);
 		Geometry background = new Geometry("Box", g);
 	    Material mat7 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 	    mat7.setTexture("ColorMap", assetManager.loadTexture("scenery.jpg"));
@@ -129,52 +179,42 @@ public class CCAProject extends SimpleApplication {
 		mat10.setColor("Color", ColorRGBA.White);
 		background3.setMaterial(mat10);
 		rootNode.attachChild(background3);
+		*/
 	
 		cam.setLocation(new Vector3f(0,0,5));
 		getCamera().lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
 		cam.lookAtDirection(new Vector3f(0,0,-10), new Vector3f(0,0,0));
-		
-		line = new Line(new Vector3f(cam.getLocation()), new Vector3f(cam.getDirection()));
-		line.setLineWidth(200);
-        Geometry geometry = new Geometry("Bullet", line);
-        Material bmat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        bmat.setColor("Color", ColorRGBA.Blue);
-        geometry.setMaterial(bmat);
-        rootNode.attachChild(geometry);
-        
-        line2 = new Line(new Vector3f(0,0,0), new Vector3f(0.25f,0.25f,0.25f));
-		line2.setLineWidth(20);
-        Geometry bg = new Geometry("Bullet", line2);
-        Material bmat2 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        bmat2.setTexture("ColorMap", assetManager.loadTexture("foam.jpg"));
-        bmat2.setColor("Color", ColorRGBA.Blue);
-        bg.setMaterial(bmat2);
-        rootNode.attachChild(bg);
-        
-        float xd = cam.getDirection().getX();
-        float yd = cam.getDirection().getY();
-        float zd = cam.getDirection().getZ();
-        float xl = cam.getLocation().getX();
-        float yl = cam.getLocation().getY();
-        float zl = cam.getLocation().getZ();
-        
-        float xf = xd * 0.25f;
-        float yf = yd * 0.25f;
-        float zf = zd * -10f;
-        
-        line2.updatePoints(new Vector3f(xl, yl, zl), new Vector3f(xf, yf, zf));
-        System.out.println(cam.getLocation());
-        System.out.println(xf);
-        System.out.println(yf);
-        System.out.println(zf);
-        
         
 	}
 	
-	
+	private void initKeys() {
+		inputManager.addMapping("Shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+		inputManager.addMapping("Crouch", new KeyTrigger(KeyInput.KEY_LSHIFT));
+		inputManager.addListener(this, "Shoot");
+		inputManager.addListener(this, "Crouch");
+	}
 
+	@Override
+	public void onAction(String binding, boolean isPressed, float tpf) {
+		if (binding.equals("Shoot")) {
+			left = isPressed;
+		} else if (binding.equals("Crouch")) {
+			lshift = isPressed;
+		}
+	}
+	
+	protected Geometry Targetbox(String Target, float x, float y, float z) {
+	    Box box = new Box(1, 1, 0.025f);
+	    Geometry cube = new Geometry("Target", box);
+	    cube.setLocalTranslation(x, y, z);
+	    Material mat1 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+	    mat1.setTexture("ColorMap", assetManager.loadTexture("target.png"));
+	    mat1.setColor("Color", ColorRGBA.White);
+	    cube.setMaterial(mat1);
+	    return cube;
+	  }
+	
 	public void simpleUpdate(float tpf) {
-		cam.setLocation(new Vector3f(cam.getLocation().getX(), 0f, cam.getLocation().getZ()));
 		
 		if (cam.getLocation().getX() > 8) {
 			cam.setLocation(new Vector3f(7.9f, cam.getLocation().getY(), cam.getLocation().getZ()));
@@ -192,11 +232,69 @@ public class CCAProject extends SimpleApplication {
 			cam.setLocation(new Vector3f(cam.getLocation().getX(), cam.getLocation().getY(), 7.9f));
 		}
 		
-		line.updatePoints(cam.getLocation(), cam.getDirection());
-		
-		
-		
+		if (left) {
+			 Sphere sphere = new Sphere(5, 5, 0.2f);
+			    Geometry shot = new Geometry("shoot", sphere);
+			    Material shotmat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+			    shotmat.setColor("Color", ColorRGBA.Black);
+			    shot.setMaterial(shotmat);
+			    
+			CollisionResults results = new CollisionResults();
+			Ray ray = new Ray(cam.getLocation(), cam.getDirection());
+			shootables.collideWith(ray, results);
+			for (int i = 0; i < results.size(); i++) {
+			String hit = results.getCollision(i).getGeometry().getName();
+			}
+			if (results.size() > 0) {
+				 CollisionResult closest = results.getClosestCollision();
+				 shot.setLocalTranslation(closest.getContactPoint());
+		          rootNode.attachChild(shot);
+		        } else {
+		          rootNode.detachChild(shot);
+		}
 		
 	}
-
+		
+		if (lshift) {
+			if (croucht == true) {
+				croucht = false;
+			} else {
+				croucht = true;
+			}
+		}
+		if (croucht == true) {
+			cam.setLocation(new Vector3f(cam.getLocation().getX(), -2f, cam.getLocation().getZ()));
+			flyCam.setMoveSpeed(5);
+		} else {
+			cam.setLocation(new Vector3f(cam.getLocation().getX(), 0f, cam.getLocation().getZ()));
+			flyCam.setMoveSpeed(15);
+		}
+		
+		try {
+			TimeUnit.MILLISECONDS.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		milisecondones = milisecondones + 1;
+		if (milisecondones == 10) {
+			milisecondones = milisecondones - 10;
+			milisecondtens = milisecondtens + 1;
+			if (milisecondtens == 10) {
+				milisecondtens = milisecondtens - 10;
+				secondones = secondones + 1;
+				if (secondones == 10) {
+					secondones = secondones - 10;
+					secondtens = secondtens + 1;
+					if (secondtens == 6) {
+						secondtens = secondtens - 6;
+						minuteones = minuteones + 1;
+						if (minuteones == 10) {
+							minuteones = minuteones - 10;
+							minutetens = minutetens + 1;
+						}}}}}
+		
+		timer.setText("" + minutetens + minuteones + ":" + secondtens + secondones
+				+ ":" + milisecondtens + milisecondones);
+		
+}
 }
