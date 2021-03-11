@@ -43,6 +43,14 @@ public class LinearSearchEfficiency {
 
 	}
 
+	public int getComparisons() {
+		return comparisons;
+	}
+
+	public void setComparisons(int comparisons) {
+		this.comparisons = comparisons;
+	}
+
 	// search for key within array
 	// return the index of the key if key is in array
 	// return -1 if key is not in array
