@@ -1,6 +1,7 @@
 package nelsoncca;
 
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import com.jme3.app.SimpleApplication;
@@ -30,8 +31,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	//TODO scoreboard
 	//TODO gun noise
 	//TODO set random positions
-	//TODO reset option
-	//TODO background
+	//TODO reset option: colour, posistions, timer, reload, croucht, shot markers
 	//TODO add controls to hud
 	
 	
@@ -42,11 +42,10 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	float x;
 	float y;
 	float z;
-	Line line;
-	Line line2;
 	Boolean left = false;
 	Boolean lshift = false;
 	Boolean croucht = false;
+	Boolean f = false;
 	private Node shootables;
 	int secondones = 0;
 	int secondtens = 0;
@@ -55,8 +54,14 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	int milisecondones = 0;
 	int milisecondtens = 0;
 	BitmapText timer;
-	String hit;
 	int i;
+	Random randomGenerator = new Random();
+    int xlow = -15;
+    int xhigh = 19;
+    int ylow = -2;
+    int yhigh = 16;
+    int zlow = -55;
+    int zhigh = -24;
 	
 	public static void main(final String[] args) {
 		final CCAProject app = new CCAProject();
@@ -68,10 +73,38 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		
 		shootables = new Node("Shootables");
 	    rootNode.attachChild(shootables);
-	    shootables.attachChild(Targetbox("target1", -20f, 0f, -35f));
-	    shootables.attachChild(Targetbox("target2", 15f, -2f, -25f));
-	    shootables.attachChild(Targetbox("target3", 0f, 1f, -55f));
-	    shootables.attachChild(Targetbox("target4", 5f, 10f, -45f));
+	    shootables.attachChild(Targetbox("target1",
+	    		randomGenerator.nextInt(xhigh - xlow) + xlow,
+	    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+	    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+	    shootables.attachChild(Targetbox("target2",
+	    		randomGenerator.nextInt(xhigh - xlow) + xlow,
+	    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+	    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+	    shootables.attachChild(Targetbox("target3",
+	    	    randomGenerator.nextInt(xhigh - xlow) + xlow,
+	    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+	    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+	    shootables.attachChild(Targetbox("target4",
+	    	    randomGenerator.nextInt(xhigh - xlow) + xlow,
+	    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+	    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+	    shootables.attachChild(Targetbox("target5",
+	    	    randomGenerator.nextInt(xhigh - xlow) + xlow,
+	    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+	    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+	    shootables.attachChild(Targetbox("target6",
+	    	    randomGenerator.nextInt(xhigh - xlow) + xlow,
+	    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+	    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+	    shootables.attachChild(Targetbox("target7",
+	    	    randomGenerator.nextInt(xhigh - xlow) + xlow,
+	    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+	    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+	    shootables.attachChild(Targetbox("target8",
+	    	    randomGenerator.nextInt(xhigh - xlow) + xlow,
+	    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+	    		randomGenerator.nextInt(zhigh - zlow) + zlow));
 		
 		initKeys();
 		
@@ -190,8 +223,10 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	private void initKeys() {
 		inputManager.addMapping("Shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
 		inputManager.addMapping("Crouch", new KeyTrigger(KeyInput.KEY_LSHIFT));
+		inputManager.addMapping("Reset", new KeyTrigger(KeyInput.KEY_F));
 		inputManager.addListener(this, "Shoot");
 		inputManager.addListener(this, "Crouch");
+		inputManager.addListener(this, "Reset");
 	}
 
 	@Override
@@ -200,6 +235,8 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			left = isPressed;
 		} else if (binding.equals("Crouch")) {
 			lshift = isPressed;
+		} else if (binding.equals("Reset")) {
+			f = isPressed;
 		}
 	}
 	
@@ -295,6 +332,52 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		
 		timer.setText("" + minutetens + minuteones + ":" + secondtens + secondones
 				+ ":" + milisecondtens + milisecondones);
+		
+		if (f == true) {
+			secondones = 0;
+			secondtens = 0;
+			minuteones = 0;
+			minutetens = 0;
+			milisecondones = 0;
+			milisecondtens = 0;
+			
+			croucht = false;
+			
+			shootables.detachAllChildren();
+			shootables.attachChild(Targetbox("target1",
+		    		randomGenerator.nextInt(xhigh - xlow) + xlow,
+		    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+		    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+		    shootables.attachChild(Targetbox("target2",
+		    		randomGenerator.nextInt(xhigh - xlow) + xlow,
+		    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+		    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+		    shootables.attachChild(Targetbox("target3",
+		    	    randomGenerator.nextInt(xhigh - xlow) + xlow,
+		    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+		    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+		    shootables.attachChild(Targetbox("target4",
+		    	    randomGenerator.nextInt(xhigh - xlow) + xlow,
+		    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+		    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+		    shootables.attachChild(Targetbox("target5",
+		    	    randomGenerator.nextInt(xhigh - xlow) + xlow,
+		    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+		    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+		    shootables.attachChild(Targetbox("target6",
+		    	    randomGenerator.nextInt(xhigh - xlow) + xlow,
+		    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+		    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+		    shootables.attachChild(Targetbox("target7",
+		    	    randomGenerator.nextInt(xhigh - xlow) + xlow,
+		    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+		    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+		    shootables.attachChild(Targetbox("target8",
+		    	    randomGenerator.nextInt(xhigh - xlow) + xlow,
+		    		randomGenerator.nextInt(yhigh - ylow) + ylow,
+		    		randomGenerator.nextInt(zhigh - zlow) + zlow));
+		    
+		}
 		
 }
 }
