@@ -31,7 +31,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	//TODO gun noise
 	//TODO set random positions
 	//TODO reset option
-	//TODO set colour changes for targets
+	//TODO background
 	//TODO add controls to hud
 	
 	
@@ -104,7 +104,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		Box a = new Box(new Vector3f(0,-5,0), 10, 0.5f, 10);
 		Geometry floor = new Geometry("Box", a);
 	    Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-	    mat.setTexture("ColorMap", assetManager.loadTexture("hardwood-floor.jpg"));
+	    mat.setTexture("ColorMap", assetManager.loadTexture("floor.jpg"));
 		mat.setColor("Color", ColorRGBA.White);
 		floor.setMaterial(mat);
 		rootNode.attachChild(floor);
@@ -112,7 +112,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		Box b = new Box(new Vector3f(10,5,0), 0.5f, 10f, 10f);
 		Geometry wall = new Geometry("Box", b);
 	    Material mat2 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-	    mat2.setTexture("ColorMap", assetManager.loadTexture("kitchenwall.jpg"));
+	    mat2.setTexture("ColorMap", assetManager.loadTexture("woodpanelling.jpg"));
 		mat2.setColor("Color", ColorRGBA.White);
 		wall.setMaterial(mat2);
 		rootNode.attachChild(wall);
@@ -120,7 +120,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		Box c = new Box(new Vector3f(-10,5,0), 0.5f, 10f, 10f);
 		Geometry wall2 = new Geometry("Box", c);
 	    Material mat3 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-	    mat3.setTexture("ColorMap", assetManager.loadTexture("wall2.jpg"));
+	    mat3.setTexture("ColorMap", assetManager.loadTexture("woodpanelling.jpg"));
 		mat3.setColor("Color", ColorRGBA.White);
 		wall2.setMaterial(mat3);
 		rootNode.attachChild(wall2);
@@ -128,7 +128,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		Box d = new Box(new Vector3f(0,5,10), 10f, 10f, 0.5f);
 		Geometry wall3 = new Geometry("Box", d);
 	    Material mat4 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-	    mat4.setTexture("ColorMap", assetManager.loadTexture("wall3.jpg"));
+	    mat4.setTexture("ColorMap", assetManager.loadTexture("woodpanelling.jpg"));
 		mat4.setColor("Color", ColorRGBA.White);
 		wall3.setMaterial(mat4);
 		rootNode.attachChild(wall3);
@@ -136,23 +136,23 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		Box e = new Box(new Vector3f(0,15,0), 10f, 0.5f, 10f);
 		Geometry roof = new Geometry("Box", e);
 	    Material mat5 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-	    mat5.setTexture("ColorMap", assetManager.loadTexture("chandelier.jpg"));
+	    mat5.setTexture("ColorMap", assetManager.loadTexture("sheetm.jpg"));
 		mat5.setColor("Color", ColorRGBA.White);
 		roof.setMaterial(mat5);
 		rootNode.attachChild(roof);
 		
-		Box f = new Box(new Vector3f(0,-3,-10), 10f, 1f, 0.5f);
+		Box f = new Box(new Vector3f(0,-3.5f,-10), 10f, 1.5f, 0.5f);
 		Geometry counter = new Geometry("Box", f);
 	    Material mat6 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-	    mat6.setTexture("ColorMap", assetManager.loadTexture("counter.jpg"));
+	    mat6.setTexture("ColorMap", assetManager.loadTexture("cc.jpg"));
 		mat6.setColor("Color", ColorRGBA.White);
 		counter.setMaterial(mat6);
 		rootNode.attachChild(counter);
 		
-	/*	Box g = new Box(new Vector3f(0,-3,-75), 100f, 100f, 0.5f);
+		Box g = new Box(new Vector3f(0,-3,-75), 100f, 100f, 0.5f);
 		Geometry background = new Geometry("Box", g);
 	    Material mat7 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-	    mat7.setTexture("ColorMap", assetManager.loadTexture("scenery.jpg"));
+	    mat7.setTexture("ColorMap", assetManager.loadTexture("concrete.jpg"));
 		mat7.setColor("Color", ColorRGBA.White);
 		background.setMaterial(mat7);
 		rootNode.attachChild(background);
@@ -160,7 +160,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		Box h = new Box(new Vector3f(0, 100, 0), 100f, 0.5f, 100f);
 		Geometry sky = new Geometry("Box", h);
 	    Material mat8 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-	    mat8.setTexture("ColorMap", assetManager.loadTexture("sky.jpeg"));
+	    mat8.setTexture("ColorMap", assetManager.loadTexture("concrete.jpg"));
 		mat8.setColor("Color", ColorRGBA.White);
 		sky.setMaterial(mat8);
 		rootNode.attachChild(sky);
@@ -168,7 +168,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		Box i = new Box(new Vector3f(75, -3, 0), 0.5f, 100f, 100f);
 		Geometry background2 = new Geometry("Box", i);
 	    Material mat9 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-	    mat9.setTexture("ColorMap", assetManager.loadTexture("scenery.jpg"));
+	    mat9.setTexture("ColorMap", assetManager.loadTexture("concrete.jpg"));
 		mat9.setColor("Color", ColorRGBA.White);
 		background2.setMaterial(mat9);
 		rootNode.attachChild(background2);
@@ -176,11 +176,10 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		Box j = new Box(new Vector3f(-75, -3, 0), 0.5f, 100f, 100f);
 		Geometry background3 = new Geometry("Box", j);
 	    Material mat10 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-	    mat10.setTexture("ColorMap", assetManager.loadTexture("scenery.jpg"));
+	    mat10.setTexture("ColorMap", assetManager.loadTexture("concrete.jpg"));
 		mat10.setColor("Color", ColorRGBA.White);
 		background3.setMaterial(mat10);
 		rootNode.attachChild(background3);
-		*/
 	
 		cam.setLocation(new Vector3f(0,0,5));
 		getCamera().lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
@@ -243,10 +242,9 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			CollisionResults results = new CollisionResults();
 			Ray ray = new Ray(cam.getLocation(), cam.getDirection());
 			shootables.collideWith(ray, results);
-			for (int i = 0; i < results.size(); i++) {
-			hit = results.getCollision(i).getGeometry().getName();
+			for (i = 0; i < results.size(); i++) {
+			results.getCollision(i).getGeometry().getMaterial().setColor("Color", ColorRGBA.Green);
 			}
-			hit = results.getCollision(i).getGeometry().setColor("Color", ColorRGBA.Green);
 			if (results.size() > 0) {
 				 CollisionResult closest = results.getClosestCollision();
 				 shot.setLocalTranslation(closest.getContactPoint());
