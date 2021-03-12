@@ -30,15 +30,13 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	//TODO reload sounds
 	//TODO scoreboard
 	//TODO gun noise
-	//TODO set random positions
 	//TODO reset option: colour, posistions, timer, reload, croucht, shot markers
 	//TODO add controls to hud
 	
 	
-	Geometry barrel;
-	Geometry handle;
 	Node playerNode = new Node("Player Node");
 	Node camNode = new Node("Cam Node");
+	Node setNode = new Node("Setting Node");
 	float x;
 	float y;
 	float z;
@@ -62,6 +60,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
     int yhigh = 16;
     int zlow = -55;
     int zhigh = -24;
+    Geometry shot;
 	
 	public static void main(final String[] args) {
 		final CCAProject app = new CCAProject();
@@ -71,6 +70,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	@Override
 	public void simpleInitApp() {
 		
+		rootNode.attachChild(setNode);
 		shootables = new Node("Shootables");
 	    rootNode.attachChild(shootables);
 	    shootables.attachChild(Targetbox("target1",
@@ -140,7 +140,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	    mat.setTexture("ColorMap", assetManager.loadTexture("floor.jpg"));
 		mat.setColor("Color", ColorRGBA.White);
 		floor.setMaterial(mat);
-		rootNode.attachChild(floor);
+		setNode.attachChild(floor);
 		
 		Box b = new Box(new Vector3f(10,5,0), 0.5f, 10f, 10f);
 		Geometry wall = new Geometry("Box", b);
@@ -148,7 +148,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	    mat2.setTexture("ColorMap", assetManager.loadTexture("woodpanelling.jpg"));
 		mat2.setColor("Color", ColorRGBA.White);
 		wall.setMaterial(mat2);
-		rootNode.attachChild(wall);
+		setNode.attachChild(wall);
 	
 		Box c = new Box(new Vector3f(-10,5,0), 0.5f, 10f, 10f);
 		Geometry wall2 = new Geometry("Box", c);
@@ -156,7 +156,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	    mat3.setTexture("ColorMap", assetManager.loadTexture("woodpanelling.jpg"));
 		mat3.setColor("Color", ColorRGBA.White);
 		wall2.setMaterial(mat3);
-		rootNode.attachChild(wall2);
+		setNode.attachChild(wall2);
 		
 		Box d = new Box(new Vector3f(0,5,10), 10f, 10f, 0.5f);
 		Geometry wall3 = new Geometry("Box", d);
@@ -164,7 +164,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	    mat4.setTexture("ColorMap", assetManager.loadTexture("woodpanelling.jpg"));
 		mat4.setColor("Color", ColorRGBA.White);
 		wall3.setMaterial(mat4);
-		rootNode.attachChild(wall3);
+		setNode.attachChild(wall3);
 		
 		Box e = new Box(new Vector3f(0,15,0), 10f, 0.5f, 10f);
 		Geometry roof = new Geometry("Box", e);
@@ -172,7 +172,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	    mat5.setTexture("ColorMap", assetManager.loadTexture("sheetm.jpg"));
 		mat5.setColor("Color", ColorRGBA.White);
 		roof.setMaterial(mat5);
-		rootNode.attachChild(roof);
+		setNode.attachChild(roof);
 		
 		Box f = new Box(new Vector3f(0,-3.5f,-10), 10f, 1.5f, 0.5f);
 		Geometry counter = new Geometry("Box", f);
@@ -180,7 +180,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	    mat6.setTexture("ColorMap", assetManager.loadTexture("cc.jpg"));
 		mat6.setColor("Color", ColorRGBA.White);
 		counter.setMaterial(mat6);
-		rootNode.attachChild(counter);
+		setNode.attachChild(counter);
 		
 		Box g = new Box(new Vector3f(0,-3,-75), 100f, 100f, 0.5f);
 		Geometry background = new Geometry("Box", g);
@@ -188,7 +188,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	    mat7.setTexture("ColorMap", assetManager.loadTexture("concrete.jpg"));
 		mat7.setColor("Color", ColorRGBA.White);
 		background.setMaterial(mat7);
-		rootNode.attachChild(background);
+		setNode.attachChild(background);
 		
 		Box h = new Box(new Vector3f(0, 100, 0), 100f, 0.5f, 100f);
 		Geometry sky = new Geometry("Box", h);
@@ -196,7 +196,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	    mat8.setTexture("ColorMap", assetManager.loadTexture("concrete.jpg"));
 		mat8.setColor("Color", ColorRGBA.White);
 		sky.setMaterial(mat8);
-		rootNode.attachChild(sky);
+		setNode.attachChild(sky);
 		
 		Box i = new Box(new Vector3f(75, -3, 0), 0.5f, 100f, 100f);
 		Geometry background2 = new Geometry("Box", i);
@@ -204,7 +204,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	    mat9.setTexture("ColorMap", assetManager.loadTexture("concrete.jpg"));
 		mat9.setColor("Color", ColorRGBA.White);
 		background2.setMaterial(mat9);
-		rootNode.attachChild(background2);
+		setNode.attachChild(background2);
 		
 		Box j = new Box(new Vector3f(-75, -3, 0), 0.5f, 100f, 100f);
 		Geometry background3 = new Geometry("Box", j);
@@ -212,7 +212,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	    mat10.setTexture("ColorMap", assetManager.loadTexture("concrete.jpg"));
 		mat10.setColor("Color", ColorRGBA.White);
 		background3.setMaterial(mat10);
-		rootNode.attachChild(background3);
+		setNode.attachChild(background3);
 	
 		cam.setLocation(new Vector3f(0,0,5));
 		getCamera().lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
@@ -271,7 +271,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		
 		if (left) {
 			 Sphere sphere = new Sphere(5, 5, 0.2f);
-			    Geometry shot = new Geometry("shoot", sphere);
+			    shot = new Geometry("shoot", sphere);
 			    Material shotmat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 			    shotmat.setColor("Color", ColorRGBA.Black);
 			    shot.setMaterial(shotmat);
@@ -342,6 +342,11 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			milisecondtens = 0;
 			
 			croucht = false;
+			
+			rootNode.detachAllChildren();
+			rootNode.attachChild(shootables);
+			rootNode.attachChild(setNode);
+			
 			
 			shootables.detachAllChildren();
 			shootables.attachChild(Targetbox("target1",
