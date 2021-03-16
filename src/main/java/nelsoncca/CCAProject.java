@@ -34,8 +34,6 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	//TODO add controls to hud
 	
 	
-	Node playerNode = new Node("Player Node");
-	Node camNode = new Node("Cam Node");
 	Node setNode = new Node("Setting Node");
 	float x;
 	float y;
@@ -44,6 +42,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	Boolean lshift = false;
 	Boolean croucht = false;
 	Boolean f = false;
+	Boolean r = false;
 	private Node shootables;
 	int secondones = 0;
 	int secondtens = 0;
@@ -52,6 +51,8 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	int milisecondones = 0;
 	int milisecondtens = 0;
 	BitmapText timer;
+	BitmapText reloadtext;
+	int bcount;
 	int i;
 	Random randomGenerator = new Random();
     int xlow = -15;
@@ -126,6 +127,13 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		pic2.setPosition(935, 515);
 		guiNode.attachChild(pic2);
 		
+		Picture pic3 = new Picture("HUD Picture");
+		pic3.setImage(assetManager, "unnamed (1).png", true);
+		pic3.setWidth(150);
+		pic3.setHeight(100);
+		pic3.setPosition(1300, 175);
+		guiNode.attachChild(pic3);
+		
 		timer = new BitmapText(guiFont, false);
 		timer.setSize(50);
 		timer.setColor(ColorRGBA.White);
@@ -133,6 +141,14 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 				+ ":" + milisecondtens + milisecondones);
 		timer.setLocalTranslation(300, timer.getLineHeight(), 0);
 		guiNode.attachChild(timer);
+		
+		reloadtext = new BitmapText(guiFont, false);
+		reloadtext.setSize(50);
+		reloadtext.setColor(ColorRGBA.White);
+		bcount = 6;
+		reloadtext.setText("" + bcount);
+		reloadtext.setLocalTranslation(750, reloadtext.getLineHeight(), 0);
+		guiNode.attachChild(reloadtext);
 		
 		Box a = new Box(new Vector3f(0,-5,0), 10, 0.5f, 10);
 		Geometry floor = new Geometry("Box", a);
@@ -224,9 +240,11 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		inputManager.addMapping("Shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
 		inputManager.addMapping("Crouch", new KeyTrigger(KeyInput.KEY_LSHIFT));
 		inputManager.addMapping("Reset", new KeyTrigger(KeyInput.KEY_F));
+		inputManager.addMapping("Reload", new KeyTrigger(KeyInput.KEY_R));
 		inputManager.addListener(this, "Shoot");
 		inputManager.addListener(this, "Crouch");
 		inputManager.addListener(this, "Reset");
+		inputManager.addListener(this, "Reload");
 	}
 
 	@Override
@@ -237,6 +255,8 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			lshift = isPressed;
 		} else if (binding.equals("Reset")) {
 			f = isPressed;
+		} else if (binding.equals("Reload")) {
+			r = isPressed;
 		}
 	}
 	
@@ -270,11 +290,16 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		}
 		
 		if (left) {
-			 Sphere sphere = new Sphere(5, 5, 0.2f);
+			left = false;
+			if (bcount > 0) {
+				Sphere sphere = new Sphere(5, 5, 0.2f);
 			    shot = new Geometry("shoot", sphere);
 			    Material shotmat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 			    shotmat.setColor("Color", ColorRGBA.Black);
 			    shot.setMaterial(shotmat);
+			    
+			    bcount = bcount - 1;
+			    reloadtext.setText("" + bcount);
 			    
 			CollisionResults results = new CollisionResults();
 			Ray ray = new Ray(cam.getLocation(), cam.getDirection());
@@ -291,8 +316,10 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		}
 		
 	}
+		}
 		
 		if (lshift) {
+			lshift = false;
 			if (croucht == true) {
 				croucht = false;
 			} else {
@@ -333,7 +360,15 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		timer.setText("" + minutetens + minuteones + ":" + secondtens + secondones
 				+ ":" + milisecondtens + milisecondones);
 		
+		if (r == true) {
+			r = false;
+			bcount = 6;
+			reloadtext.setText("" + bcount);
+		}
+		
 		if (f == true) {
+			f = false;
+			
 			secondones = 0;
 			secondtens = 0;
 			minuteones = 0;
@@ -341,6 +376,8 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			milisecondones = 0;
 			milisecondtens = 0;
 			
+			bcount = 6;
+			reloadtext.setText("" + bcount);
 			croucht = false;
 			
 			rootNode.detachAllChildren();
