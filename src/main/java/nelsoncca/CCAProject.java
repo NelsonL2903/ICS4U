@@ -51,7 +51,6 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	int milisecondones = 0;
 	int milisecondtens = 0;
 	BitmapText timer;
-	BitmapText reloadtext;
 	int bcount;
 	int i;
 	Random randomGenerator = new Random();
@@ -150,13 +149,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		timer.setLocalTranslation(300, timer.getLineHeight(), 0);
 		guiNode.attachChild(timer);
 		
-		reloadtext = new BitmapText(guiFont, false);
-		reloadtext.setSize(50);
-		reloadtext.setColor(ColorRGBA.White);
 		bcount = 6;
-		reloadtext.setText("" + bcount);
-		reloadtext.setLocalTranslation(750, reloadtext.getLineHeight(), 0);
-		guiNode.attachChild(reloadtext);
 		
 		Box a = new Box(new Vector3f(0,-5,0), 10, 0.5f, 10);
 		Geometry floor = new Geometry("Box", a);
@@ -307,7 +300,6 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			    shot.setMaterial(shotmat);
 			    
 			    bcount = bcount - 1;
-			    reloadtext.setText("" + bcount);
 			    
 			CollisionResults results = new CollisionResults();
 			Ray ray = new Ray(cam.getLocation(), cam.getDirection());
@@ -371,7 +363,6 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		if (r == true) {
 			r = false;
 			bcount = 6;
-			reloadtext.setText("" + bcount);
 		}
 		
 		if (f == true) {
@@ -385,7 +376,6 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			milisecondtens = 0;
 			
 			bcount = 6;
-			reloadtext.setText("" + bcount);
 			croucht = false;
 			
 			rootNode.detachAllChildren();
