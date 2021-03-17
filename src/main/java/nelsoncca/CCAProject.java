@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.audio.AudioNode;
 import com.jme3.collision.CollisionResult;
 import com.jme3.collision.CollisionResults;
 import com.jme3.font.BitmapText;
@@ -143,7 +144,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		
 		timer = new BitmapText(guiFont, false);
 		timer.setSize(50);
-		timer.setColor(ColorRGBA.White);
+		timer.setColor(ColorRGBA.Black);
 		timer.setText("" + minutetens + minuteones + ":" + secondtens + secondones
 				+ ":" + milisecondtens + milisecondones);
 		timer.setLocalTranslation(300, timer.getLineHeight(), 0);
@@ -299,6 +300,8 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			    shotmat.setColor("Color", ColorRGBA.Black);
 			    shot.setMaterial(shotmat);
 			    
+			    AudioNode shotnoise = new AudioNode(assetManager, "pew.wav");
+			    shotnoise.play();
 			    bcount = bcount - 1;
 			    
 			CollisionResults results = new CollisionResults();
