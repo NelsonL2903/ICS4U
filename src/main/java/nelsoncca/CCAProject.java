@@ -62,6 +62,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
     int zlow = -55;
     int zhigh = -24;
     Geometry shot;
+    Picture pic4;
 	
 	public static void main(final String[] args) {
 		final CCAProject app = new CCAProject();
@@ -128,11 +129,18 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		guiNode.attachChild(pic2);
 		
 		Picture pic3 = new Picture("HUD Picture");
-		pic3.setImage(assetManager, "unnamed (1).png", true);
+		pic3.setImage(assetManager, "Output.png", true);
 		pic3.setWidth(150);
 		pic3.setHeight(100);
 		pic3.setPosition(1300, 175);
 		guiNode.attachChild(pic3);
+		
+		pic4 = new Picture("HUD Picture");
+		pic4.setImage(assetManager, "bcount6.png", true);
+		pic4.setWidth(150);
+		pic4.setHeight(200);
+		pic4.setPosition(1300, 25);
+		guiNode.attachChild(pic4);
 		
 		timer = new BitmapText(guiFont, false);
 		timer.setSize(50);
@@ -421,5 +429,20 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		    
 		}
 		
+		if (bcount == 0) {
+			pic4.setImage(assetManager, "bcount0.png", true);
+		} else if (bcount == 1) {
+			pic4.setImage(assetManager, "bcount1.png", true);
+		} else if (bcount == 2) {
+			pic4.setImage(assetManager, "bcount2.png", true);
+		} else if (bcount == 3) {
+			pic4.setImage(assetManager, "bcount3.png", true);
+		} else if (bcount == 4) {
+			pic4.setImage(assetManager, "bcount4.png", true);
+		} else if (bcount == 5) {
+			pic4.setImage(assetManager, "bcount5.png", true);
+		} else if (bcount == 6) {
+			pic4.setImage(assetManager, "bcount6.png", true);
+		}
 }
 }
