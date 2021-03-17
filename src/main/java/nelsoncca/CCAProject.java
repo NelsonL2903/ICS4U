@@ -150,6 +150,8 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		timer.setLocalTranslation(300, timer.getLineHeight(), 0);
 		guiNode.attachChild(timer);
 		
+		
+		
 		bcount = 6;
 		
 		Box a = new Box(new Vector3f(0,-5,0), 10, 0.5f, 10);
