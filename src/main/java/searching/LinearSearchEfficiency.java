@@ -28,7 +28,7 @@ public class LinearSearchEfficiency {
 
 // why is numberOfLoops cast to a double?
 		// the numberOfLoops is cast to a double because, if it wasn't cast,
-		// the the code would be dividing two int values, which would result 
+		// then the code would be dividing two int values, which would result 
 		// in an integer answer with no decimal places which would then be 
 		// converted to a double value and end up as a whole number followed by .0
 		// by casting the array size to a double, you are then dividing an int

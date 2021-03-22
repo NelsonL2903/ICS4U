@@ -21,8 +21,6 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
-import com.jme3.scene.shape.Cylinder;
-import com.jme3.scene.shape.Line;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.ui.*;
 
@@ -149,8 +147,6 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 				+ ":" + milisecondtens + milisecondones);
 		timer.setLocalTranslation(300, timer.getLineHeight(), 0);
 		guiNode.attachChild(timer);
-		
-		
 		
 		bcount = 6;
 		
@@ -303,7 +299,9 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			    shot.setMaterial(shotmat);
 			    
 			    AudioNode shotnoise = new AudioNode(assetManager, "pew.wav");
+			    shotnoise.setVolume(10);
 			    shotnoise.play();
+			    
 			    bcount = bcount - 1;
 			    
 			CollisionResults results = new CollisionResults();
