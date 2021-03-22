@@ -1,6 +1,12 @@
 package nelsoncca;
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -70,12 +76,15 @@ public class CCAProject extends SimpleApplication implements ActionListener{
     int target6c = 0;
     int target7c = 0;
     int target8c = 0;
+    static String name;
+    private List<String> scores = new ArrayList<String>();
 	
 	public static void main(final String[] args) {
 		final CCAProject app = new CCAProject();
 		System.out.println("Please enter your name, then click enter to begin the game!");
 		Scanner keyboard = new Scanner(System.in);
-		String name = keyboard.nextLine();
+		name = keyboard.nextLine();
+		keyboard.close();
 		app.start();
 	}
 
@@ -499,6 +508,27 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		if (target1c + target2c + target3c + target4c + target5c + target6c + target7c + target8c == 8) {
 			rscore.setText("Most Recent Score " + minutetens + minuteones + ":" + secondtens + secondones
 				+ ":" + milisecondtens + milisecondones);
+			String fscore = "" + name + minutetens + minuteones + secondtens + secondones
+							+ milisecondtens + milisecondones;
+			
+			
+			Path path = Paths.get("highscores.txt");
+			try {
+				scores = Files.readAllLines(path);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+			scores.add(fscore);
+			try {
+				Files.write(path, scores);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			for (String i : scores) {
+				System.out.println(i);
+			}
+			
+			
 			f = true;
 		}
 		
