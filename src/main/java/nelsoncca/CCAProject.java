@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -34,7 +35,6 @@ import com.jme3.ui.*;
 public class CCAProject extends SimpleApplication implements ActionListener{
 	//TODO reload
 	//TODO reload sounds
-	//TODO scoreboard
 	//TODO reset option: colour, posistions, timer, reload, croucht, shot markers
 	//TODO add controls to hud
 	//TODO add ar
@@ -57,6 +57,11 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	int milisecondtens = 0;
 	BitmapText timer;
 	BitmapText rscore;
+	BitmapText topscores;
+	BitmapText topscores2;
+	BitmapText topscores3;
+	BitmapText topscores4;
+	BitmapText topscores5;
 	int bcount;
 	int i;
 	Random randomGenerator = new Random();
@@ -78,6 +83,9 @@ public class CCAProject extends SimpleApplication implements ActionListener{
     int target8c = 0;
     static String name;
     private List<String> scores = new ArrayList<String>();
+    private List<String> nscores = new ArrayList<String>();
+    private List<String> lgscores = new ArrayList<String>();
+    Path path = Paths.get("highscores.txt");
 	
 	public static void main(final String[] args) {
 		final CCAProject app = new CCAProject();
@@ -163,19 +171,90 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		
 		timer = new BitmapText(guiFont, false);
 		timer.setSize(50);
-		timer.setColor(ColorRGBA.Black);
+		timer.setColor(ColorRGBA.Red);
 		timer.setText("" + minutetens + minuteones + ":" + secondtens + secondones
 				+ ":" + milisecondtens + milisecondones);
 		timer.setLocalTranslation(300, timer.getLineHeight(), 0);
 		guiNode.attachChild(timer);
 		
 		rscore = new BitmapText(guiFont, false);
-		rscore.setSize(50);
+		rscore.setSize(30);
 		rscore.setColor(ColorRGBA.Black);
-		rscore.setText("Most Recent Score " + minutetens + minuteones + ":" + secondtens + secondones
+		rscore.setText("" + minutetens + minuteones + ":" + secondtens + secondones
 				+ ":" + milisecondtens + milisecondones);
-		rscore.setLocalTranslation(750, rscore.getLineHeight(), 0);
+		rscore.setLocalTranslation(50, 350, 0);
 		guiNode.attachChild(rscore);
+		
+		BitmapText mostrecent = new BitmapText(guiFont, false);
+		mostrecent.setSize(30);
+		mostrecent.setColor(ColorRGBA.Black);
+		mostrecent.setText("Most Recent Score");
+		mostrecent.setLocalTranslation(50, 400, 0);
+		guiNode.attachChild(mostrecent);
+		
+		BitmapText highscore = new BitmapText(guiFont, false);
+		highscore.setSize(30);
+		highscore.setColor(ColorRGBA.Black);
+		highscore.setText("Highscores");
+		highscore.setLocalTranslation(50, 700, 0);
+		guiNode.attachChild(highscore);
+		
+		try {
+			lgscores = Files.readAllLines(path);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		Collections.sort(lgscores);
+		
+		topscores = new BitmapText(guiFont, false);
+		topscores.setSize(30);
+		topscores.setColor(ColorRGBA.Black);
+		topscores.setText(lgscores.get(0).substring(6)
+				+ " " + lgscores.get(0).substring(0,2) + ":"
+				+ lgscores.get(0).substring(2,4)
+				+ ":" + lgscores.get(0).substring(4,6));;
+		topscores.setLocalTranslation(50, 650, 0);
+		guiNode.attachChild(topscores);
+		
+		topscores2 = new BitmapText(guiFont, false);
+		topscores2.setSize(30);
+		topscores2.setColor(ColorRGBA.Black);
+		topscores2.setText(lgscores.get(1).substring(6)
+				+ " " + lgscores.get(1).substring(0,2) + ":"
+				+ lgscores.get(1).substring(2,4)
+				+ ":" + lgscores.get(1).substring(4,6));
+		topscores2.setLocalTranslation(50, 600, 0);
+		guiNode.attachChild(topscores2);
+		
+		topscores3 = new BitmapText(guiFont, false);
+		topscores3.setSize(30);
+		topscores3.setColor(ColorRGBA.Black);
+		topscores3.setText(lgscores.get(2).substring(6)
+				+ " " + lgscores.get(2).substring(0,2) + ":"
+				+ lgscores.get(2).substring(2,4)
+				+ ":" + lgscores.get(2).substring(4,6));
+		topscores3.setLocalTranslation(50, 550, 0);
+		guiNode.attachChild(topscores3);
+		
+		topscores4 = new BitmapText(guiFont, false);
+		topscores4.setSize(30);
+		topscores4.setColor(ColorRGBA.Black);
+		topscores4.setText(lgscores.get(3).substring(6)
+				+ " " + lgscores.get(3).substring(0,2) + ":"
+				+ lgscores.get(3).substring(2,4)
+				+ ":" + lgscores.get(3).substring(4,6));
+		topscores4.setLocalTranslation(50, 500, 0);
+		guiNode.attachChild(topscores4);
+		
+		topscores5 = new BitmapText(guiFont, false);
+		topscores5.setSize(30);
+		topscores5.setColor(ColorRGBA.Black);
+		topscores5.setText(lgscores.get(4).substring(6)
+				+ " " + lgscores.get(4).substring(0,2) + ":"
+				+ lgscores.get(4).substring(2,4)
+				+ ":" + lgscores.get(4).substring(4,6));
+		topscores5.setLocalTranslation(50, 450, 0);
+		guiNode.attachChild(topscores5);
 		
 		bcount = 6;
 		
@@ -328,7 +407,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			    shot.setMaterial(shotmat);
 			    
 			    AudioNode shotnoise = new AudioNode(assetManager, "pew.wav");
-			    shotnoise.setVolume(100);
+			    shotnoise.setVolume(1000);
 			    shotnoise.play();
 			    
 			    bcount = bcount - 1;
@@ -506,13 +585,12 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		}
 		
 		if (target1c + target2c + target3c + target4c + target5c + target6c + target7c + target8c == 8) {
-			rscore.setText("Most Recent Score " + minutetens + minuteones + ":" + secondtens + secondones
+			rscore.setText("" + minutetens + minuteones + ":" + secondtens + secondones
 				+ ":" + milisecondtens + milisecondones);
-			String fscore = "" + name + "0." + minutetens + minuteones + secondtens + secondones
-							+ milisecondtens + milisecondones;
+			String fscore = "" + minutetens + minuteones + secondtens + secondones
+							+ milisecondtens + milisecondones + name;
 			
 			
-			Path path = Paths.get("highscores.txt");
 			try {
 				scores = Files.readAllLines(path);
 					} catch (IOException e) {
@@ -524,9 +602,37 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			for (String i : scores) {
-				System.out.println(i);
+			/*try {
+				Files.delete(path);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}*/
+			nscores.clear();
+			for (String j : scores) {
+				nscores.add(j);
 			}
+			Collections.sort(nscores);
+			
+			topscores.setText(nscores.get(0).substring(6)
+					+ " " + nscores.get(0).substring(0,2) + ":"
+					+ nscores.get(0).substring(2,4)
+					+ ":" + nscores.get(0).substring(4,6));
+			topscores2.setText(nscores.get(1).substring(6)
+					+ " " + nscores.get(1).substring(0,2) + ":"
+					+ nscores.get(1).substring(2,4)
+					+ ":" + nscores.get(1).substring(4,6));
+			topscores3.setText(nscores.get(2).substring(6)
+					+ " " + nscores.get(2).substring(0,2) + ":"
+					+ nscores.get(2).substring(2,4)
+					+ ":" + nscores.get(2).substring(4,6));
+			topscores4.setText(nscores.get(3).substring(6)
+					+ " " + nscores.get(3).substring(0,2) + ":"
+					+ nscores.get(3).substring(2,4)
+					+ ":" + nscores.get(3).substring(4,6));
+			topscores5.setText(nscores.get(4).substring(6)
+					+ " " + nscores.get(4).substring(0,2) + ":"
+					+ nscores.get(4).substring(2,4)
+					+ ":" + nscores.get(4).substring(4,6));
 			
 			f = true;
 		}
