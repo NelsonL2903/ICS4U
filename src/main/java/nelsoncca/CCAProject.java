@@ -508,7 +508,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		if (target1c + target2c + target3c + target4c + target5c + target6c + target7c + target8c == 8) {
 			rscore.setText("Most Recent Score " + minutetens + minuteones + ":" + secondtens + secondones
 				+ ":" + milisecondtens + milisecondones);
-			String fscore = "" + name + minutetens + minuteones + secondtens + secondones
+			String fscore = "" + name + "0." + minutetens + minuteones + secondtens + secondones
 							+ milisecondtens + milisecondones;
 			
 			
@@ -527,7 +527,6 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			for (String i : scores) {
 				System.out.println(i);
 			}
-			
 			
 			f = true;
 		}
