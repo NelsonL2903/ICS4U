@@ -2,6 +2,7 @@ package nelsoncca;
 
 
 import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import com.jme3.app.SimpleApplication;
@@ -28,10 +29,9 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	//TODO reload
 	//TODO reload sounds
 	//TODO scoreboard
-	//TODO gun noise
 	//TODO reset option: colour, posistions, timer, reload, croucht, shot markers
 	//TODO add controls to hud
-	
+	//TODO add ar
 	
 	Node setNode = new Node("Setting Node");
 	float x;
@@ -50,6 +50,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 	int milisecondones = 0;
 	int milisecondtens = 0;
 	BitmapText timer;
+	BitmapText rscore;
 	int bcount;
 	int i;
 	Random randomGenerator = new Random();
@@ -61,9 +62,20 @@ public class CCAProject extends SimpleApplication implements ActionListener{
     int zhigh = -24;
     Geometry shot;
     Picture pic4;
+    int target1c = 0;
+    int target2c = 0;
+    int target3c = 0;
+    int target4c = 0;
+    int target5c = 0;
+    int target6c = 0;
+    int target7c = 0;
+    int target8c = 0;
 	
 	public static void main(final String[] args) {
 		final CCAProject app = new CCAProject();
+		System.out.println("Please enter your name, then click enter to begin the game!");
+		Scanner keyboard = new Scanner(System.in);
+		String name = keyboard.nextLine();
 		app.start();
 	}
 
@@ -147,6 +159,14 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 				+ ":" + milisecondtens + milisecondones);
 		timer.setLocalTranslation(300, timer.getLineHeight(), 0);
 		guiNode.attachChild(timer);
+		
+		rscore = new BitmapText(guiFont, false);
+		rscore.setSize(50);
+		rscore.setColor(ColorRGBA.Black);
+		rscore.setText("Most Recent Score " + minutetens + minuteones + ":" + secondtens + secondones
+				+ ":" + milisecondtens + milisecondones);
+		rscore.setLocalTranslation(750, rscore.getLineHeight(), 0);
+		guiNode.attachChild(rscore);
 		
 		bcount = 6;
 		
@@ -299,7 +319,7 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			    shot.setMaterial(shotmat);
 			    
 			    AudioNode shotnoise = new AudioNode(assetManager, "pew.wav");
-			    shotnoise.setVolume(10);
+			    shotnoise.setVolume(100);
 			    shotnoise.play();
 			    
 			    bcount = bcount - 1;
@@ -309,6 +329,35 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 			shootables.collideWith(ray, results);
 			for (i = 0; i < results.size(); i++) {
 			results.getCollision(i).getGeometry().getMaterial().setColor("Color", ColorRGBA.Green);
+			switch (results.getCollision(i).getGeometry().getName()) {
+			case "target1": 
+				target1c = 1;
+				break;
+			case "target2": 
+				target2c = 1;
+				break;
+			case "target3": 
+				target3c = 1;
+				break;
+			case "target4": 
+				target4c = 1;
+				break;
+			case "target5": 
+				target5c = 1;
+				break;
+			case "target6": 
+				target6c = 1;
+				break;
+			case "target7": 
+				target7c = 1;
+				break;
+			case "target8": 
+				target8c = 1;
+				break;
+			default:
+				break;
+			}
+			
 			}
 			if (results.size() > 0) {
 				 CollisionResult closest = results.getClosestCollision();
@@ -370,6 +419,15 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		
 		if (f == true) {
 			f = false;
+			
+			target1c = 0;
+		    target2c = 0;
+		    target3c = 0;
+		    target4c = 0;
+		    target5c = 0;
+		    target6c = 0;
+		    target7c = 0;
+		    target8c = 0;
 			
 			secondones = 0;
 			secondtens = 0;
@@ -437,5 +495,12 @@ public class CCAProject extends SimpleApplication implements ActionListener{
 		} else if (bcount == 6) {
 			pic4.setImage(assetManager, "bcount6.png", true);
 		}
+		
+		if (target1c + target2c + target3c + target4c + target5c + target6c + target7c + target8c == 8) {
+			rscore.setText("Most Recent Score " + minutetens + minuteones + ":" + secondtens + secondones
+				+ ":" + milisecondtens + milisecondones);
+			f = true;
+		}
+		
 }
 }
