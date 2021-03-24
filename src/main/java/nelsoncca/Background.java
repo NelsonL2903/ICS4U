@@ -120,7 +120,7 @@ public class Background {
 	BitmapText riflet = new BitmapText(guiFont, false);
 	riflet.setSize(20);
 	riflet.setColor(ColorRGBA.Black);
-	riflet.setText("1 = Equip Pistol");
+	riflet.setText("2 = Equip Rifle");
 	riflet.setLocalTranslation(50, pistolt.getLocalTranslation().getY() - 30, 0);
 	guiNode.attachChild(riflet);
 	

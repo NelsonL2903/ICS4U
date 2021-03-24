@@ -35,8 +35,6 @@ import com.jme3.ui.*;
 public class CCAProject2 extends SimpleApplication implements ActionListener{
 	//TODO reload sounds
 	//TODO shooting sounds
-	//TODO add controls to HUD
-	//TODO add AR
 	
 	Node setNode = new Node("Setting Node");
 	float x;
@@ -65,6 +63,7 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 	BitmapText topscores5;
 	BitmapText pbscore;
 	Picture pic;
+	Picture pic3;
 	int bcount;
 	int rbcount;
 	int i;
@@ -155,7 +154,7 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 		pic.setPosition(1250, 100);
 		guiNode.attachChild(pic);
 		
-		Picture pic3 = new Picture("HUD Picture");
+		pic3 = new Picture("HUD Picture");
 		pic3.setImage(assetManager, "Output.png", true);
 		pic3.setWidth(150);
 		pic3.setHeight(100);
@@ -525,7 +524,6 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 			
 			bcount = 6;
 			rbcount = 6;
-			croucht = false;
 			
 			rootNode.detachAllChildren();
 			rootNode.attachChild(shootables);
@@ -574,13 +572,24 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 			pic.setWidth(settings.getWidth()/2);
 			pic.setHeight(settings.getHeight()/2);
 			pic.setPosition(1250, 100);
+			
+			pic3.setImage(assetManager, "Output.png", true);
+			pic3.setWidth(150);
+			pic3.setHeight(100);
+			pic3.setPosition(1300, 175);
+			
 		} else if (rifle) {
 			rifle = false;
 			gun = 2;
 			pic.setImage(assetManager, "arifle2.png", true);
 			pic.setWidth(settings.getWidth()/2);
 			pic.setHeight(settings.getHeight()/2);
-			pic.setPosition(1250, 100);
+			pic.setPosition(1300, 175);
+			
+			pic3.setImage(assetManager, "Output (3).png", true);
+			pic3.setWidth(175);
+			pic3.setHeight(125);
+			pic3.setPosition(1310, 175);
 		}
 		
 		if (gun == 1) {
