@@ -54,6 +54,62 @@ public class Background {
 	pb.setLocalTranslation(50, 400, 0);
 	guiNode.attachChild(pb);
 	
+	BitmapText shoot = new BitmapText(guiFont, false);
+	shoot.setSize(20);
+	shoot.setColor(ColorRGBA.Black);
+	shoot.setText("Left-click Mouse = Shoot");
+	shoot.setLocalTranslation(50, 975, 0);
+	guiNode.attachChild(shoot);
+	
+	BitmapText forward = new BitmapText(guiFont, false);
+	forward.setSize(20);
+	forward.setColor(ColorRGBA.Black);
+	forward.setText("W = Move Forward");
+	forward.setLocalTranslation(50, shoot.getLocalTranslation().getY() - 30, 0);
+	guiNode.attachChild(forward);
+	
+	BitmapText backward = new BitmapText(guiFont, false);
+	backward.setSize(20);
+	backward.setColor(ColorRGBA.Black);
+	backward.setText("S = Move Backward");
+	backward.setLocalTranslation(50, forward.getLocalTranslation().getY() - 30, 0);
+	guiNode.attachChild(backward);
+	
+	BitmapText left = new BitmapText(guiFont, false);
+	left.setSize(20);
+	left.setColor(ColorRGBA.Black);
+	left.setText("A = Move Left");
+	left.setLocalTranslation(50, backward.getLocalTranslation().getY() - 30, 0);
+	guiNode.attachChild(left);
+	
+	BitmapText right = new BitmapText(guiFont, false);
+	right.setSize(20);
+	right.setColor(ColorRGBA.Black);
+	right.setText("D = Move Right");
+	right.setLocalTranslation(50, left.getLocalTranslation().getY() - 30, 0);
+	guiNode.attachChild(right);
+	
+	BitmapText reload = new BitmapText(guiFont, false);
+	reload.setSize(20);
+	reload.setColor(ColorRGBA.Black);
+	reload.setText("R = Reload");
+	reload.setLocalTranslation(50, right.getLocalTranslation().getY() - 30, 0);
+	guiNode.attachChild(reload);
+	
+	BitmapText crouch = new BitmapText(guiFont, false);
+	crouch.setSize(20);
+	crouch.setColor(ColorRGBA.Black);
+	crouch.setText("Shift = Crouch");
+	crouch.setLocalTranslation(50, reload.getLocalTranslation().getY() - 30, 0);
+	guiNode.attachChild(crouch);
+	
+	BitmapText reset = new BitmapText(guiFont, false);
+	reset.setSize(20);
+	reset.setColor(ColorRGBA.Black);
+	reset.setText("F = Reset");
+	reset.setLocalTranslation(50, crouch.getLocalTranslation().getY() - 30, 0);
+	guiNode.attachChild(reset);
+	
 	Box a = new Box(new Vector3f(0,-5,0), 10, 0.5f, 10);
 	Geometry floor = new Geometry("Box", a);
     Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -133,5 +189,6 @@ public class Background {
 	mat10.setColor("Color", ColorRGBA.White);
 	background3.setMaterial(mat10);
 	setNode.attachChild(background3);
+
 	}
 }

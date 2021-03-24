@@ -35,10 +35,9 @@ import com.jme3.ui.*;
 public class CCAProject2 extends SimpleApplication implements ActionListener{
 	//TODO reload
 	//TODO reload sounds
-	//TODO reset option: colour, posistions, timer, reload, croucht, shot markers
-	//TODO add controls to hud
-	//TODO add ar
-	//TODO 2nd class
+	//TODO shooting sounds
+	//TODO add controls to HUD
+	//TODO add AR
 	
 	Node setNode = new Node("Setting Node");
 	float x;
@@ -91,7 +90,7 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 	
 	public static void main(final String[] args) {
 		final CCAProject2 app = new CCAProject2();
-		System.out.println("Please enter your name, then click enter to begin the game!");
+		System.out.println("Please enter your name, then click enter to begin the game! If you have played previously, please use the same name as before.");
 		Scanner keyboard = new Scanner(System.in);
 		name = keyboard.nextLine();
 		keyboard.close();
@@ -171,7 +170,7 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 		timer.setColor(ColorRGBA.Red);
 		timer.setText("" + minutetens + minuteones + ":" + secondtens + secondones
 				+ ":" + milisecondtens + milisecondones);
-		timer.setLocalTranslation(300, timer.getLineHeight(), 0);
+		timer.setLocalTranslation(50, timer.getLineHeight(), 0);
 		guiNode.attachChild(timer);
 		
 		rscore = new BitmapText(guiFont, false);
@@ -458,7 +457,6 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 			rootNode.detachAllChildren();
 			rootNode.attachChild(shootables);
 			rootNode.attachChild(setNode);
-			
 			
 			shootables.detachAllChildren();
 			shootables.attachChild(Targetbox("target1",
