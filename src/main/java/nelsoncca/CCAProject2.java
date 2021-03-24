@@ -33,7 +33,6 @@ import com.jme3.scene.shape.Sphere;
 import com.jme3.ui.*;
 
 public class CCAProject2 extends SimpleApplication implements ActionListener{
-	//TODO reload
 	//TODO reload sounds
 	//TODO shooting sounds
 	//TODO add controls to HUD
@@ -46,6 +45,8 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 	Boolean left = false;
 	Boolean lshift = false;
 	Boolean croucht = false;
+	Boolean pistol = false;
+	Boolean rifle = false;
 	Boolean f = false;
 	Boolean r = false;
 	private Node shootables;
@@ -63,7 +64,9 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 	BitmapText topscores4;
 	BitmapText topscores5;
 	BitmapText pbscore;
+	Picture pic;
 	int bcount;
+	int rbcount;
 	int i;
 	Random randomGenerator = new Random();
     int xlow = -15;
@@ -82,6 +85,7 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
     int target6c = 0;
     int target7c = 0;
     int target8c = 0;
+    int gun = 1;
     static String name;
     private List<String> scores = new ArrayList<String>();
     private List<String> nscores = new ArrayList<String>();
@@ -144,7 +148,7 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 		setDisplayStatView(false);
 		setDisplayFps(false);
 		
-		Picture pic = new Picture("HUD Picture");
+		pic = new Picture("HUD Picture");
 		pic.setImage(assetManager, "nerfgun (1).png", true);
 		pic.setWidth(settings.getWidth()/2);
 		pic.setHeight(settings.getHeight()/2);
@@ -264,6 +268,7 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 		guiNode.attachChild(topscores5);
 		
 		bcount = 6;
+		rbcount = 6;
 		
 		cam.setLocation(new Vector3f(0,0,5));
 		getCamera().lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
@@ -276,10 +281,14 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 		inputManager.addMapping("Crouch", new KeyTrigger(KeyInput.KEY_LSHIFT));
 		inputManager.addMapping("Reset", new KeyTrigger(KeyInput.KEY_F));
 		inputManager.addMapping("Reload", new KeyTrigger(KeyInput.KEY_R));
+		inputManager.addMapping("Pistol", new KeyTrigger(KeyInput.KEY_1));
+		inputManager.addMapping("Rifle", new KeyTrigger(KeyInput.KEY_2));
 		inputManager.addListener(this, "Shoot");
 		inputManager.addListener(this, "Crouch");
 		inputManager.addListener(this, "Reset");
 		inputManager.addListener(this, "Reload");
+		inputManager.addListener(this, "Pistol");
+		inputManager.addListener(this, "Rifle");
 	}
 
 	@Override
@@ -292,6 +301,10 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 			f = isPressed;
 		} else if (binding.equals("Reload")) {
 			r = isPressed;
+		} else if (binding.equals("Pistol")) {
+			pistol = isPressed;
+		} else if (binding.equals("Rifle")) {
+			rifle = isPressed;
 		}
 	}
 	
@@ -326,7 +339,7 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 		
 		if (left) {
 			left = false;
-			if (bcount > 0) {
+			if (bcount > 0 && gun == 1) {
 				Sphere sphere = new Sphere(5, 5, 0.2f);
 			    shot = new Geometry("shoot", sphere);
 			    Material shotmat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -382,6 +395,64 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 		          rootNode.detachChild(shot);
 		}
 		
+	} else if (rbcount > 0 && gun == 2) {
+
+		Sphere sphere = new Sphere(5, 5, 0.2f);
+	    shot = new Geometry("shoot", sphere);
+	    Material shotmat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+	    shotmat.setColor("Color", ColorRGBA.Black);
+	    shot.setMaterial(shotmat);
+	    
+	    AudioNode shotnoise = new AudioNode(assetManager, "pew.wav");
+	    shotnoise.setVolume(1000);
+	    shotnoise.play();
+	    
+	    rbcount = rbcount - 1;
+	    
+	CollisionResults results = new CollisionResults();
+	Ray ray = new Ray(cam.getLocation(), cam.getDirection());
+	shootables.collideWith(ray, results);
+	for (i = 0; i < results.size(); i++) {
+	results.getCollision(i).getGeometry().getMaterial().setColor("Color", ColorRGBA.Green);
+	switch (results.getCollision(i).getGeometry().getName()) {
+	case "target1": 
+		target1c = 1;
+		break;
+	case "target2": 
+		target2c = 1;
+		break;
+	case "target3": 
+		target3c = 1;
+		break;
+	case "target4": 
+		target4c = 1;
+		break;
+	case "target5": 
+		target5c = 1;
+		break;
+	case "target6": 
+		target6c = 1;
+		break;
+	case "target7": 
+		target7c = 1;
+		break;
+	case "target8": 
+		target8c = 1;
+		break;
+	default:
+		break;
+	}
+	
+	}
+	if (results.size() > 0) {
+		 CollisionResult closest = results.getClosestCollision();
+		 shot.setLocalTranslation(closest.getContactPoint());
+          rootNode.attachChild(shot);
+        } else {
+          rootNode.detachChild(shot);
+}
+
+
 	}
 		}
 		
@@ -430,6 +501,7 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 		if (r == true) {
 			r = false;
 			bcount = 6;
+			rbcount = 6;
 		}
 		
 		if (f == true) {
@@ -452,6 +524,7 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 			milisecondtens = 0;
 			
 			bcount = 6;
+			rbcount = 6;
 			croucht = false;
 			
 			rootNode.detachAllChildren();
@@ -494,6 +567,23 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 		    
 		}
 		
+		if (pistol) {
+			pistol = false;
+			gun = 1;
+			pic.setImage(assetManager, "nerfgun (1).png", true);
+			pic.setWidth(settings.getWidth()/2);
+			pic.setHeight(settings.getHeight()/2);
+			pic.setPosition(1250, 100);
+		} else if (rifle) {
+			rifle = false;
+			gun = 2;
+			pic.setImage(assetManager, "arifle2.png", true);
+			pic.setWidth(settings.getWidth()/2);
+			pic.setHeight(settings.getHeight()/2);
+			pic.setPosition(1250, 100);
+		}
+		
+		if (gun == 1) {
 		if (bcount == 0) {
 			pic4.setImage(assetManager, "bcount0.png", true);
 		} else if (bcount == 1) {
@@ -509,13 +599,28 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
 		} else if (bcount == 6) {
 			pic4.setImage(assetManager, "bcount6.png", true);
 		}
-		
+		} else if (gun == 2){
+			if (rbcount == 0) {
+				pic4.setImage(assetManager, "bcount0.png", true);
+			} else if (rbcount == 1) {
+				pic4.setImage(assetManager, "bcount1.png", true);
+			} else if (rbcount == 2) {
+				pic4.setImage(assetManager, "bcount2.png", true);
+			} else if (rbcount == 3) {
+				pic4.setImage(assetManager, "bcount3.png", true);
+			} else if (rbcount == 4) {
+				pic4.setImage(assetManager, "bcount4.png", true);
+			} else if (rbcount == 5) {
+				pic4.setImage(assetManager, "bcount5.png", true);
+			} else if (rbcount == 6) {
+				pic4.setImage(assetManager, "bcount6.png", true);
+			}
+		}
 		if (target1c + target2c + target3c + target4c + target5c + target6c + target7c + target8c == 8) {
 			rscore.setText("" + minutetens + minuteones + ":" + secondtens + secondones
 				+ ":" + milisecondtens + milisecondones);
 			String fscore = "" + minutetens + minuteones + secondtens + secondones
 							+ milisecondtens + milisecondones + name;
-			
 			
 			try {
 				scores = Files.readAllLines(path);

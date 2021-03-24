@@ -57,8 +57,8 @@ public class Background {
 	BitmapText shoot = new BitmapText(guiFont, false);
 	shoot.setSize(20);
 	shoot.setColor(ColorRGBA.Black);
-	shoot.setText("Left-click Mouse = Shoot");
-	shoot.setLocalTranslation(50, 975, 0);
+	shoot.setText("Left-Click = Shoot");
+	shoot.setLocalTranslation(50, 1000, 0);
 	guiNode.attachChild(shoot);
 	
 	BitmapText forward = new BitmapText(guiFont, false);
@@ -109,6 +109,20 @@ public class Background {
 	reset.setText("F = Reset");
 	reset.setLocalTranslation(50, crouch.getLocalTranslation().getY() - 30, 0);
 	guiNode.attachChild(reset);
+	
+	BitmapText pistolt = new BitmapText(guiFont, false);
+	pistolt.setSize(20);
+	pistolt.setColor(ColorRGBA.Black);
+	pistolt.setText("1 = Equip Pistol");
+	pistolt.setLocalTranslation(50, reset.getLocalTranslation().getY() - 30, 0);
+	guiNode.attachChild(pistolt);
+	
+	BitmapText riflet = new BitmapText(guiFont, false);
+	riflet.setSize(20);
+	riflet.setColor(ColorRGBA.Black);
+	riflet.setText("1 = Equip Pistol");
+	riflet.setLocalTranslation(50, pistolt.getLocalTranslation().getY() - 30, 0);
+	guiNode.attachChild(riflet);
 	
 	Box a = new Box(new Vector3f(0,-5,0), 10, 0.5f, 10);
 	Geometry floor = new Geometry("Box", a);
