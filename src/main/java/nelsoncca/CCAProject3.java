@@ -36,10 +36,9 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 	//TODO reload sounds
 	//TODO shooting sounds
 	
+	// Creates a node for for which the background is attached to
 	Node setNode = new Node("Setting Node");
-	float x;
-	float y;
-	float z;
+	//sets the key booleans all to false, becomes true if key is clicked
 	Boolean left = false;
 	Boolean lshift = false;
 	Boolean croucht = false;
@@ -47,7 +46,9 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 	Boolean rifle = false;
 	Boolean f = false;
 	Boolean r = false;
+	// Creates a node for for which the targets are attached to
 	private Node shootables;
+	
 	int secondones = 0;
 	int secondtens = 0;
 	int minuteones = 0;
@@ -85,12 +86,12 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
     int target7c = 0;
     int target8c = 0;
     int gun = 1;
-    int timerst = 0;
+    int timerstart = 0;
     static String name;
     private List<String> scores = new ArrayList<String>();
     private List<String> nscores = new ArrayList<String>();
     private List<String> lgscores = new ArrayList<String>();
-    Path path = Paths.get("highscores2.txt");
+    static Path path = Paths.get("highscores2.txt");
 	
 	public static void main(final String[] args) {
 		final CCAProject3 app = new CCAProject3();
@@ -339,7 +340,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		
 		if (left) {
 			left = false;
-			timerst = 1;
+			timerstart = 1;
 			if (bcount > 0 && gun == 1) {
 				Sphere sphere = new Sphere(5, 5, 0.2f);
 			    shot = new Geometry("shoot", sphere);
@@ -479,7 +480,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 			e.printStackTrace();
 		}
 		
-		if (timerst == 1) {
+		if (timerstart == 1) {
 		milisecondones = milisecondones + 1;
 		if (milisecondones == 10) {
 			milisecondones = milisecondones - 10;
@@ -510,7 +511,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		if (f == true) {
 			f = false;
 			
-			timerst = 0;
+			timerstart = 0;
 			
 			target1c = 0;
 		    target2c = 0;

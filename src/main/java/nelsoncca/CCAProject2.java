@@ -89,7 +89,7 @@ public class CCAProject2 extends SimpleApplication implements ActionListener{
     private List<String> scores = new ArrayList<String>();
     private List<String> nscores = new ArrayList<String>();
     private List<String> lgscores = new ArrayList<String>();
-    Path path = Paths.get("highscores.txt");
+    static Path path = Paths.get("highscores.txt");
 	
 	public static void main(final String[] args) {
 		final CCAProject2 app = new CCAProject2();
