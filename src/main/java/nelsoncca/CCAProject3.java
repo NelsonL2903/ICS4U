@@ -35,8 +35,12 @@ import com.jme3.ui.*;
 public class CCAProject3 extends SimpleApplication implements ActionListener{
 	//TODO reload sounds
 	//TODO shooting sounds
+	/*
+	 * Aim trainer 
+	 */
 	
-	// Creates a node for for which the background is attached to
+	
+	//creates a node for for which the background is attached to
 	Node setNode = new Node("Setting Node");
 	//sets the key booleans all to false, becomes true if key is clicked
 	Boolean left = false;
@@ -46,37 +50,51 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 	Boolean rifle = false;
 	Boolean f = false;
 	Boolean r = false;
-	// Creates a node for for which the targets are attached to
+	//creates a node for for which the targets are attached to
 	private Node shootables;
-	
+	//creates the variables used in the timer and sets them all to 0, variables are also used to record the time
 	int secondones = 0;
 	int secondtens = 0;
 	int minuteones = 0;
 	int minutetens = 0;
 	int milisecondones = 0;
 	int milisecondtens = 0;
+	//creates the text on the HUD that shows the timer
 	BitmapText timer;
+	//creates the text on the HUD that shows the most recent score
 	BitmapText rscore;
+	//creates the text on the HUD that shows the top five scores
 	BitmapText topscores;
 	BitmapText topscores2;
 	BitmapText topscores3;
 	BitmapText topscores4;
 	BitmapText topscores5;
+	//creates the text on the HUD that shows the personal best of whoever's playing
 	BitmapText pbscore;
+	//creates the picture of the nerf gun
 	Picture pic;
+	//creates the picture of the nerf gun above the ammo
 	Picture pic3;
+	//bullet count of the nerf pistol
 	int bcount;
+	//bullet count of the nerf rifle
 	int rbcount;
+	//variable is used in the for loop where it calculates where the bullet hits and which target is hit
 	int i;
+	//Generates a random number for use in randomly positioning targets
 	Random randomGenerator = new Random();
+	//sets boundaries for targets
     int xlow = -15;
     int xhigh = 19;
     int ylow = -2;
     int yhigh = 16;
     int zlow = -55;
     int zhigh = -24;
+    //Creates the shot markers
     Geometry shot;
+    //Creates the picture showing the remaining ammo
     Picture pic4;
+    //shows the state of the targets, if 0 then target has not been hit, if 1 the target has been hit
     int target1c = 0;
     int target2c = 0;
     int target3c = 0;
@@ -85,17 +103,24 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
     int target6c = 0;
     int target7c = 0;
     int target8c = 0;
+    //shows which gun is in use, 1 is pistol, 2 is rifle
     int gun = 1;
+    //toggles the timer so it doesn’t start until you shoot
     int timerstart = 0;
+    //the name of the person playing
     static String name;
+    //stores all of the scores in an array and adds the new scores
     private List<String> scores = new ArrayList<String>();
+    //stores all of the scores from the scores ArrayList in an array and sorts them, and is used to constantly update highscores
     private List<String> nscores = new ArrayList<String>();
+    //takes the scores from all previous games, sorts, and prints out the highscores prior to any new scores being added or updated
     private List<String> lgscores = new ArrayList<String>();
     static Path path = Paths.get("highscores2.txt");
 	
 	public static void main(final String[] args) {
 		final CCAProject3 app = new CCAProject3();
 		System.out.println("Please enter your name, then click enter to begin the game! If you have played previously, please use the same name as before.");
+		//gets user's name from keyboard
 		Scanner keyboard = new Scanner(System.in);
 		name = keyboard.nextLine();
 		keyboard.close();
@@ -108,6 +133,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		rootNode.attachChild(setNode);
 		shootables = new Node("Shootables");
 	    rootNode.attachChild(shootables);
+	    //randomly positions targets and attaches to shootables node
 	    shootables.attachChild(Targetbox("target1",
 	    		randomGenerator.nextInt(xhigh - xlow) + xlow,
 	    		randomGenerator.nextInt(yhigh - ylow) + ylow,
@@ -141,14 +167,19 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 	    		randomGenerator.nextInt(yhigh - ylow) + ylow,
 	    		randomGenerator.nextInt(zhigh - zlow) + zlow));
 		
-		initKeys();
+		//initializes keys
+	    initKeys();
 		Background back = new Background(assetManager, guiNode, guiFont, setNode);
+		//calls init method from Background class and creates background/setting of game
 		back.init();
 		
+		//set move speed of camera
 		flyCam.setMoveSpeed(15);
+		//removes stats from screen
 		setDisplayStatView(false);
 		setDisplayFps(false);
 		
+		//creates picture of nerf gun
 		pic = new Picture("HUD Picture");
 		pic.setImage(assetManager, "nerfgun (1).png", true);
 		pic.setWidth(settings.getWidth()/2);
@@ -156,6 +187,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		pic.setPosition(1250, 100);
 		guiNode.attachChild(pic);
 		
+		//creates picture of nerf gun above ammo
 		pic3 = new Picture("HUD Picture");
 		pic3.setImage(assetManager, "Output.png", true);
 		pic3.setWidth(150);
@@ -163,6 +195,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		pic3.setPosition(1300, 175);
 		guiNode.attachChild(pic3);
 		
+		//creates picture of ammo remaining
 		pic4 = new Picture("HUD Picture");
 		pic4.setImage(assetManager, "bcount6.png", true);
 		pic4.setWidth(150);
@@ -170,6 +203,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		pic4.setPosition(1300, 25);
 		guiNode.attachChild(pic4);
 		
+		//creates the text which shows the timer
 		timer = new BitmapText(guiFont, false);
 		timer.setSize(50);
 		timer.setColor(ColorRGBA.Red);
@@ -178,6 +212,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		timer.setLocalTranslation(50, timer.getLineHeight(), 0);
 		guiNode.attachChild(timer);
 		
+		//creates the text which shows the most recent score
 		rscore = new BitmapText(guiFont, false);
 		rscore.setSize(30);
 		rscore.setColor(ColorRGBA.Black);
@@ -186,6 +221,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		rscore.setLocalTranslation(50, 250, 0);
 		guiNode.attachChild(rscore);
 		
+		//creates the text which shows who's playing
 		BitmapText loggedin = new BitmapText(guiFont, false);
 		loggedin.setSize(30);
 		loggedin.setColor(ColorRGBA.Red);
@@ -193,6 +229,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		loggedin.setLocalTranslation(50, 1050, 0);
 		guiNode.attachChild(loggedin);
 		
+		//adds all scores from the highscores file to the lgscores ArrayList and sorts
 		try {
 			lgscores = Files.readAllLines(path);
 				} catch (IOException e) {
@@ -200,6 +237,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 				}
 		Collections.sort(lgscores);
 		
+		//creates the text which shows the player's personal best
 		pbscore = new BitmapText(guiFont, false);
 		pbscore.setSize(30);
 		pbscore.setColor(ColorRGBA.Black);
@@ -207,6 +245,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		pbscore.setLocalTranslation(50, 350, 0);
 		guiNode.attachChild(pbscore);
 		
+		//prints out the player's personal best time by finding the first occurrence of their name in the sorted ArrayList and prints out the time
 		int k = 0;
 		for (String i : lgscores) {
 			if (i.substring(6).equals(name)) {
@@ -218,6 +257,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 			++k;
 		}
 		
+		//the next few blocks of code prints out the top five highscores
 		topscores = new BitmapText(guiFont, false);
 		topscores.setSize(30);
 		topscores.setColor(ColorRGBA.Black);
@@ -268,15 +308,18 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		topscores5.setLocalTranslation(50, 450, 0);
 		guiNode.attachChild(topscores5);
 		
+		//sets bullet count of both guns to 6;
 		bcount = 6;
 		rbcount = 6;
 		
+		//sets camera to be looking forward and positioned at the center of the game
 		cam.setLocation(new Vector3f(0,0,5));
 		getCamera().lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
 		cam.lookAtDirection(new Vector3f(0,0,-10), new Vector3f(0,0,0));
         
 	}
 	
+	//initializes the different keys
 	private void initKeys() {
 		inputManager.addMapping("Shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
 		inputManager.addMapping("Crouch", new KeyTrigger(KeyInput.KEY_LSHIFT));
@@ -293,6 +336,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 	}
 
 	@Override
+	//sets the key booleans to be true if the corresponding button is pressed
 	public void onAction(String binding, boolean isPressed, float tpf) {
 		if (binding.equals("Shoot")) {
 			left = isPressed;
@@ -309,6 +353,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		}
 	}
 	
+	//creates the target
 	protected Geometry Targetbox(String name, float x, float y, float z) {
 	    Box box = new Box(1, 1, 0.025f);
 	    Geometry cube = new Geometry(name, box);
@@ -320,8 +365,10 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 	    return cube;
 	  }
 	
+	//constantly updates any aspects of the game which are changing
 	public void simpleUpdate(float tpf) {
 		
+		//sets boundaries of camera so it can't leave the room
 		if (cam.getLocation().getX() > 8) {
 			cam.setLocation(new Vector3f(7.9f, cam.getLocation().getY(), cam.getLocation().getZ()));
 		}
@@ -338,8 +385,11 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 			cam.setLocation(new Vector3f(cam.getLocation().getX(), cam.getLocation().getY(), 7.9f));
 		}
 		
+		//if mouse is left clicked shoots the gun if gun still has ammo
 		if (left) {
+			//immediately sets left to be false so button cannot be held 
 			left = false;
+			//now that the first shot has been fired, starts the timer
 			timerstart = 1;
 			if (bcount > 0 && gun == 1) {
 				Sphere sphere = new Sphere(5, 5, 0.2f);
