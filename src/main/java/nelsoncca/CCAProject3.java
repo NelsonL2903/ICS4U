@@ -36,7 +36,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 	//TODO reload sounds
 	//TODO shooting sounds
 	/*
-	 * Aim trainer 
+	 * Aim trainer which records the amount of time it takes to hit all eight targets and shows the highscores 
 	 */
 	
 	
