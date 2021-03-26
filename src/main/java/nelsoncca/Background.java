@@ -25,7 +25,10 @@ public class Background {
 		this.setNode = setNode;
 	}
 
+	//initializes the text on screen which doen't change and the background/setting
 	public void init() {
+	
+	//creates the picture of the crosshair on screen
 	Picture pic2 = new Picture("HUD Picture");
 	pic2.setImage(assetManager, "crosshair.png", true);
 	pic2.setWidth(50);
@@ -33,6 +36,7 @@ public class Background {
 	pic2.setPosition(935, 515);
 	guiNode.attachChild(pic2);
 	
+	//prints out the text "Most Recent Score" on screen
 	BitmapText mostrecent = new BitmapText(guiFont, false);
 	mostrecent.setSize(30);
 	mostrecent.setColor(ColorRGBA.Red);
@@ -40,6 +44,7 @@ public class Background {
 	mostrecent.setLocalTranslation(50, 300, 0);
 	guiNode.attachChild(mostrecent);
 	
+	//prints out the text "Highscores" on screen
 	BitmapText highscore = new BitmapText(guiFont, false);
 	highscore.setSize(30);
 	highscore.setColor(ColorRGBA.Red);
@@ -47,6 +52,7 @@ public class Background {
 	highscore.setLocalTranslation(50, 700, 0);
 	guiNode.attachChild(highscore);
 	
+	//prints out the text "Personal Best" on screen
 	BitmapText pb = new BitmapText(guiFont, false);
 	pb.setSize(30);
 	pb.setColor(ColorRGBA.Red);
@@ -54,6 +60,7 @@ public class Background {
 	pb.setLocalTranslation(50, 400, 0);
 	guiNode.attachChild(pb);
 	
+	//the next few blocks of code print out the controls on screen
 	BitmapText shoot = new BitmapText(guiFont, false);
 	shoot.setSize(20);
 	shoot.setColor(ColorRGBA.Black);
@@ -124,6 +131,7 @@ public class Background {
 	riflet.setLocalTranslation(50, pistolt.getLocalTranslation().getY() - 30, 0);
 	guiNode.attachChild(riflet);
 	
+	//the next few blocks of code create the background/setting of the game
 	Box a = new Box(new Vector3f(0,-5,0), 10, 0.5f, 10);
 	Geometry floor = new Geometry("Box", a);
     Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
