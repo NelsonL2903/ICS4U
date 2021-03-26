@@ -257,7 +257,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 			++k;
 		}
 		
-		//the next few blocks of code prints out the top five highscores
+		//prints out the top five highscores
 		topscores = new BitmapText(guiFont, false);
 		topscores.setSize(30);
 		topscores.setColor(ColorRGBA.Black);
@@ -387,28 +387,34 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		
 		//if mouse is left clicked shoots the gun if gun still has ammo
 		if (left) {
-			//immediately sets left to be false so button cannot be held 
+			//immediately sets the boolean to be false so button cannot be held 
 			left = false;
 			//now that the first shot has been fired, starts the timer
 			timerstart = 1;
+			//if using pistol and you have ammo, fire the gun
 			if (bcount > 0 && gun == 1) {
+				//creates the shot marker
 				Sphere sphere = new Sphere(5, 5, 0.2f);
 			    shot = new Geometry("shoot", sphere);
 			    Material shotmat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 			    shotmat.setColor("Color", ColorRGBA.Black);
 			    shot.setMaterial(shotmat);
 			    
+			    //plays the shooting noise
 			    AudioNode shotnoise = new AudioNode(assetManager, "pew.wav");
 			    shotnoise.setVolume(1000);
 			    shotnoise.play();
 			    
+			    //reduces bullet count by 1
 			    bcount = bcount - 1;
 			    
+			//checks for collisions between the player's shot and the targets and if a target is hit then sets the colour of the target to green
 			CollisionResults results = new CollisionResults();
 			Ray ray = new Ray(cam.getLocation(), cam.getDirection());
 			shootables.collideWith(ray, results);
 			for (i = 0; i < results.size(); i++) {
 			results.getCollision(i).getGeometry().getMaterial().setColor("Color", ColorRGBA.Green);
+			//sets the value of the target to 1 if hit
 			switch (results.getCollision(i).getGeometry().getName()) {
 			case "target1": 
 				target1c = 1;
@@ -439,6 +445,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 			}
 			
 			}
+			//places a shot marker where the shot was on the target
 			if (results.size() > 0) {
 				 CollisionResult closest = results.getClosestCollision();
 				 shot.setLocalTranslation(closest.getContactPoint());
@@ -447,7 +454,9 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		          rootNode.detachChild(shot);
 		}
 		
-	} else if (rbcount > 0 && gun == 2) {
+		//this code is the exact same as the code directly above but is for the rifle instead of the pistol
+		//only difference is that it changes the rifle bullet count instead of the pistol bullet count
+		} else if (rbcount > 0 && gun == 2) {
 
 		Sphere sphere = new Sphere(5, 5, 0.2f);
 	    shot = new Geometry("shoot", sphere);
@@ -508,7 +517,9 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 	}
 		}
 		
+		//if the left shift button is clicked then crouch is toggled
 		if (lshift) {
+			//immediately sets the boolean to be false so button cannot be held 
 			lshift = false;
 			if (croucht == true) {
 				croucht = false;
@@ -516,6 +527,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 				croucht = true;
 			}
 		}
+		//lowers camera height and speed if crouched
 		if (croucht == true) {
 			cam.setLocation(new Vector3f(cam.getLocation().getX(), -2f, cam.getLocation().getZ()));
 			flyCam.setMoveSpeed(5);
@@ -524,13 +536,15 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 			flyCam.setMoveSpeed(15);
 		}
 		
+		//if shot has been fired, start timer
+		if (timerstart == 1) {
+			
 		try {
 			TimeUnit.MILLISECONDS.sleep(10);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
-		if (timerstart == 1) {
 		milisecondones = milisecondones + 1;
 		if (milisecondones == 10) {
 			milisecondones = milisecondones - 10;
@@ -549,20 +563,27 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 							minutetens = minutetens + 1;
 						}}}}}}
 		
+		//constantly updates timer
 		timer.setText("" + minutetens + minuteones + ":" + secondtens + secondones
 				+ ":" + milisecondtens + milisecondones);
 		
+		//if r button is pressed guns are reloaded
 		if (r == true) {
+			//immediately sets the boolean to be false so button cannot be held 
 			r = false;
 			bcount = 6;
 			rbcount = 6;
 		}
 		
+		//if f button is pressed resets the game
 		if (f == true) {
+			//immediately sets the boolean to be false so button cannot be held 
 			f = false;
 			
+			//turns off timer
 			timerstart = 0;
 			
+			//resets targets to none have been hit
 			target1c = 0;
 		    target2c = 0;
 		    target3c = 0;
@@ -572,6 +593,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		    target7c = 0;
 		    target8c = 0;
 			
+		    //resets timer
 			secondones = 0;
 			secondtens = 0;
 			minuteones = 0;
@@ -579,9 +601,11 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 			milisecondones = 0;
 			milisecondtens = 0;
 			
+			//resets ammo
 			bcount = 6;
 			rbcount = 6;
 			
+			//detaches and the reattaches everything from rootNode so all shot markers disappear
 			rootNode.detachAllChildren();
 			rootNode.attachChild(shootables);
 			rootNode.attachChild(setNode);
@@ -622,7 +646,9 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		    
 		}
 		
+		//if pistol button is clicked, equips pistol and updates images on HUD to be of the pistol
 		if (pistol) {
+			//immediately sets the boolean to be false so button cannot be held 
 			pistol = false;
 			gun = 1;
 			pic.setImage(assetManager, "nerfgun (1).png", true);
@@ -635,7 +661,9 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 			pic3.setHeight(100);
 			pic3.setPosition(1300, 175);
 			
+		//if rifle button is clicked, equips rifle and updates images on HUD to be of the rifle
 		} else if (rifle) {
+			//immediately sets the boolean to be false so button cannot be held 
 			rifle = false;
 			gun = 2;
 			pic.setImage(assetManager, "arifle2.png", true);
@@ -649,6 +677,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 			pic3.setPosition(1310, 175);
 		}
 		
+		//updates the image of the ammo based on which gun is equipped and how much ammo is remaining
 		if (gun == 1) {
 		if (bcount == 0) {
 			pic4.setImage(assetManager, "bcount0.png", true);
@@ -682,12 +711,16 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 				pic4.setImage(assetManager, "bcount6.png", true);
 			}
 		}
+		
+		//if all targets have been hit record time and store as string
 		if (target1c + target2c + target3c + target4c + target5c + target6c + target7c + target8c == 8) {
 			rscore.setText("" + minutetens + minuteones + ":" + secondtens + secondones
 				+ ":" + milisecondtens + milisecondones);
 			String fscore = "" + minutetens + minuteones + secondtens + secondones
 							+ milisecondtens + milisecondones + name;
 			
+			//adds all of the previous times and the new time from the file to the scores ArrayList
+			//then overwrites the file and adds all the scores back into the file now with the new score included
 			try {
 				scores = Files.readAllLines(path);
 					} catch (IOException e) {
@@ -700,12 +733,14 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 					e.printStackTrace();
 				}
 		
+			//clears the nscores ArrayList so it doesn't contain duplicate scores
+			//then adds all the scores to the nscores ArrayList and sorts the ArrayList
 			nscores.clear();
 			for (String j : scores) {
 				nscores.add(j);
 			}
 			Collections.sort(nscores);
-			
+			//prints out the player's personal best time by finding the first occurrence of their name in the sorted ArrayList and prints out the time
 			int k = 0;
 			for (String i : nscores) {
 				if (i.substring(6).equals(name)) {
@@ -717,6 +752,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 				++k;
 			}
 			
+			//prints out the top five highscores
 			topscores.setText(nscores.get(0).substring(6)
 					+ " " + nscores.get(0).substring(0,2) + ":"
 					+ nscores.get(0).substring(2,4)
@@ -738,6 +774,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 					+ nscores.get(4).substring(2,4)
 					+ ":" + nscores.get(4).substring(4,6));
 			
+			//now that all eight targets have been hit, resets the game
 			f = true;
 		}
 		
