@@ -79,6 +79,12 @@
 			<artifactId>nifty</artifactId>
 			<version>1.4.3</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jmonkeyengine/jme3-niftygui -->
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-niftygui</artifactId>
+			<version>3.4.0-alpha7</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
 

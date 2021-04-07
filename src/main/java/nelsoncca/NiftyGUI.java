@@ -11,6 +11,14 @@ import de.lessvoid.nifty.screen.ScreenController;
 
 public class NiftyGUI extends SimpleApplication implements ScreenController{
 
+	private Nifty nifty;
+	
+	public static void main(String[] args){
+        NiftyGUI app = new NiftyGUI();
+        app.setPauseOnLostFocus(false);
+        app.start();
+	}
+        
 	@Override
 	public void simpleInitApp() {
 		// TODO Auto-generated method stub
