@@ -35,7 +35,7 @@ public class NiftyGUI extends SimpleApplication implements ScreenController{
 	                audioRenderer,
 	                guiViewPort);
 	        nifty = niftyDisplay.getNifty();
-	        nifty.fromXml("Interface/Nifty/HelloJme.xml", "start", this);
+	        nifty.fromXml("HelloJme.xml", "start", this);
 
 	        guiViewPort.addProcessor(niftyDisplay);
 
@@ -44,6 +44,10 @@ public class NiftyGUI extends SimpleApplication implements ScreenController{
 	        inputManager.setCursorVisible(true);		
 	}
 
+	public void textclickx() {
+		System.out.println("Hello!");
+	}
+	
 	@Override
 	public void bind(Nifty nifty, Screen screen) {
 		 System.out.println("bind( " + screen.getScreenId() + ")");		
