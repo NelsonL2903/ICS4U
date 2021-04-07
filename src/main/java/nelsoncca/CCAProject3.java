@@ -32,7 +32,7 @@ import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.ui.*;
 
-public class FinalCCA extends SimpleApplication implements ActionListener{
+public class CCAProject3 extends SimpleApplication implements ActionListener{
 	//TODO reload sounds
 	//TODO shooting sounds
 	/*
@@ -118,7 +118,7 @@ public class FinalCCA extends SimpleApplication implements ActionListener{
     static Path path = Paths.get("highscores2.txt");
 	
 	public static void main(final String[] args) {
-		final FinalCCA app = new FinalCCA();
+		final CCAProject3 app = new CCAProject3();
 		System.out.println("Please enter your name, then click enter to begin the game! If you have played previously, please use the same name as before.");
 		//gets user's name from keyboard
 		Scanner keyboard = new Scanner(System.in);
