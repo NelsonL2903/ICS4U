@@ -401,8 +401,8 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 			    shot.setMaterial(shotmat);
 			    
 			    //plays the shooting noise
-			    AudioNode shotnoise = new AudioNode(assetManager, "pew.wav");
-			    shotnoise.setVolume(1000);
+			    AudioNode shotnoise = new AudioNode(assetManager, "pew2.wav");
+			    shotnoise.setVolume(1);
 			    shotnoise.play();
 			    
 			    //reduces bullet count by 1
@@ -464,8 +464,8 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 	    shotmat.setColor("Color", ColorRGBA.Black);
 	    shot.setMaterial(shotmat);
 	    
-	    AudioNode shotnoise = new AudioNode(assetManager, "pew.wav");
-	    shotnoise.setVolume(1000);
+	    AudioNode shotnoise = new AudioNode(assetManager, "pew2.wav");
+	    shotnoise.setVolume(1);
 	    shotnoise.play();
 	    
 	    rbcount = rbcount - 1;
