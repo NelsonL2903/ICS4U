@@ -1,88 +1,70 @@
 package nelsoncca;
 
-import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
-import com.jme3.app.state.BaseAppState;
+import com.jme3.material.Material;
 import com.jme3.niftygui.NiftyJmeDisplay;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.shape.Box;
 import de.lessvoid.nifty.Nifty;
-import de.lessvoid.nifty.builder.LayerBuilder;
-import de.lessvoid.nifty.builder.PanelBuilder;
-import de.lessvoid.nifty.builder.ScreenBuilder;
-import de.lessvoid.nifty.controls.button.builder.ButtonBuilder;
-import de.lessvoid.nifty.screen.DefaultScreenController;
+import de.lessvoid.nifty.screen.Screen;
+import de.lessvoid.nifty.screen.ScreenController;
 
-public class NiftyGUI2 extends BaseAppState {
+public class NiftyGUI2 extends SimpleApplication implements ScreenController{
 
+	private Nifty nifty;
+	
+	public static void main(String[] args){
+        NiftyGUI2 app = new NiftyGUI2();
+        app.setPauseOnLostFocus(false);
+        app.start();
+	}
+        
 	@Override
-	protected void initialize(Application app) {
-		// TODO Auto-generated method stub
+	public void simpleInitApp() {
+		 
+		Box b = new Box(1, 1, 1);
+	        Geometry geom = new Geometry("Box", b);
+	        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+	        mat.setTexture("ColorMap", assetManager.loadTexture("Monkey.jpg"));
+	        geom.setMaterial(mat);
+	        rootNode.attachChild(geom);
 
+	        NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(
+	                assetManager,
+	                inputManager,
+	                audioRenderer,
+	                guiViewPort);
+	        nifty = niftyDisplay.getNifty();
+	        nifty.fromXml("HelloJme2.xml", "start", this);
+
+	        guiViewPort.addProcessor(niftyDisplay);
+
+	        flyCam.setEnabled(false);
+	        flyCam.setDragToRotate(true);
+	        inputManager.setCursorVisible(true);		
+	}
+
+	public void textclickx() {
+		System.out.println("Hello!");
+	}
+	
+	@Override
+	public void bind(Nifty nifty, Screen screen) {
+		 System.out.println("bind( " + screen.getScreenId() + ")");		
 	}
 
 	@Override
-	protected void cleanup(Application app) {
-		// TODO Auto-generated method stub
-
+	public void onStartScreen() {
+		System.out.println("onStartScreen");		
 	}
 
 	@Override
-	protected void onEnable() {
-		NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(getApplication().getAssetManager(),
-				getApplication().getInputManager(), getApplication().getAudioRenderer(),
-				getApplication().getGuiViewPort());
-
-		Nifty nifty = niftyDisplay.getNifty();
-		getApplication().getGuiViewPort().addProcessor(niftyDisplay);
-		((SimpleApplication) getApplication()).getFlyByCamera().setDragToRotate(true);
-
-		nifty.loadStyleFile("nifty-default-styles.xml");
-		nifty.loadControlFile("nifty-default-controls.xml");
-		nifty.gotoScreen("start"); // start the screen
-
-		// <screen>
-		nifty.addScreen("Screen_ID", new ScreenBuilder("Hello Nifty Screen") {
-			{
-				controller(new DefaultScreenController()); // Screen properties
-
-				// <layer>
-				layer(new LayerBuilder("Layer_ID") {
-					{
-						childLayoutVertical(); // layer properties, add more...
-
-						// <panel>
-						panel(new PanelBuilder("Panel_ID") {
-							{
-								childLayoutCenter(); // panel properties, add more...
-
-								// GUI elements
-								control(new ButtonBuilder("Button_ID", "Hello Nifty") {
-									{
-										alignCenter();
-										valignCenter();
-										height("5%");
-										width("15%");
-									}
-								});
-
-								// .. add more GUI elements here
-
-							}
-						});
-						// </panel>
-					}
-				});
-				// </layer>
-			}
-		}.build(nifty));
-		// </screen>
-
-		nifty.gotoScreen("Screen_ID"); // start the screen
+	public void onEndScreen() {
+		System.out.println("onEndScreen");		
 	}
-
-	@Override
-	protected void onDisable() {
-		// TODO Auto-generated method stub
-
-	}
+	
+	public void quit(){
+        nifty.gotoScreen("end");
+    }
 
 }
