@@ -32,7 +32,7 @@ import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.ui.*;
 
-public class CCAProject3 extends SimpleApplication implements ActionListener{
+public class FinalCCA extends SimpleApplication implements ActionListener{
 	//TODO reload sounds
 	//TODO shooting sounds
 	/*
@@ -118,7 +118,7 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
     static Path path = Paths.get("highscores2.txt");
 	
 	public static void main(final String[] args) {
-		final CCAProject3 app = new CCAProject3();
+		final FinalCCA app = new FinalCCA();
 		System.out.println("Please enter your name, then click enter to begin the game! If you have played previously, please use the same name as before.");
 		//gets user's name from keyboard
 		Scanner keyboard = new Scanner(System.in);
@@ -571,6 +571,14 @@ public class CCAProject3 extends SimpleApplication implements ActionListener{
 		if (r == true) {
 			//immediately sets the boolean to be false so button cannot be held 
 			r = false;
+			
+			//plays the reload sound effect if guns aren't already reloaded
+			if ((bcount + rbcount) != 12) {
+			AudioNode reloadnoise = new AudioNode(assetManager, "reload.wav");
+		    reloadnoise.setVolume(1);
+		    reloadnoise.play();
+			}
+		    
 			bcount = 6;
 			rbcount = 6;
 		}
