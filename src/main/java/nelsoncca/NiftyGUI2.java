@@ -21,13 +21,6 @@ public class NiftyGUI2 extends SimpleApplication implements ScreenController{
         
 	@Override
 	public void simpleInitApp() {
-		 
-		Box b = new Box(1, 1, 1);
-	        Geometry geom = new Geometry("Box", b);
-	        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-	        mat.setTexture("ColorMap", assetManager.loadTexture("Monkey.jpg"));
-	        geom.setMaterial(mat);
-	        rootNode.attachChild(geom);
 
 	        NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(
 	                assetManager,
@@ -35,7 +28,7 @@ public class NiftyGUI2 extends SimpleApplication implements ScreenController{
 	                audioRenderer,
 	                guiViewPort);
 	        nifty = niftyDisplay.getNifty();
-	        nifty.fromXml("HelloJme2.xml", "start", this);
+	        nifty.fromXml("HelloJme3.xml", "start", this);
 
 	        guiViewPort.addProcessor(niftyDisplay);
 
