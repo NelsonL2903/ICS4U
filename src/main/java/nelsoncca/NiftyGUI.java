@@ -21,26 +21,46 @@ public class NiftyGUI extends SimpleApplication implements ScreenController{
         
 	@Override
 	public void simpleInitApp() {
-		// TODO Auto-generated method stub
-		
+		 
+		Box b = new Box(1, 1, 1);
+	        Geometry geom = new Geometry("Box", b);
+	        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+	        mat.setTexture("ColorMap", assetManager.loadTexture("Monkey.jpg"));
+	        geom.setMaterial(mat);
+	        rootNode.attachChild(geom);
+
+	        NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(
+	                assetManager,
+	                inputManager,
+	                audioRenderer,
+	                guiViewPort);
+	        nifty = niftyDisplay.getNifty();
+	        nifty.fromXml("Interface/Nifty/HelloJme.xml", "start", this);
+
+	        guiViewPort.addProcessor(niftyDisplay);
+
+	        flyCam.setEnabled(false);
+	        flyCam.setDragToRotate(true);
+	        inputManager.setCursorVisible(true);		
 	}
 
 	@Override
 	public void bind(Nifty nifty, Screen screen) {
-		// TODO Auto-generated method stub
-		
+		 System.out.println("bind( " + screen.getScreenId() + ")");		
 	}
 
 	@Override
 	public void onStartScreen() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("onStartScreen");		
 	}
 
 	@Override
 	public void onEndScreen() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("onEndScreen");		
 	}
+	
+	public void quit(){
+        nifty.gotoScreen("end");
+    }
 
 }
