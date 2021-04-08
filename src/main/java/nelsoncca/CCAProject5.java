@@ -117,7 +117,9 @@ public class CCAProject5 extends SimpleApplication implements ActionListener{
     private List<String> lgscores = new ArrayList<String>();
     static Path path = Paths.get("highscores2.txt");
 	
-	public static void starter(String name) {
+	public static void starter(String input) {
+		name = input;
+		System.out.println(name);
 		final CCAProject5 app = new CCAProject5();
 		app.start();
 	}

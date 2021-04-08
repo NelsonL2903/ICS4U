@@ -70,6 +70,7 @@ public class CCAProject6 extends JPanel implements ActionListener {
 			name = jtf.getText();
 		} else if (e.getSource()==button) {
 			if ((jtf.getText().equals(""))==false) {
+				System.out.println(name);
 				cca5.starter(name);
 			}
 		}
