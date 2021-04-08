@@ -117,13 +117,8 @@ public class CCAProject5 extends SimpleApplication implements ActionListener{
     private List<String> lgscores = new ArrayList<String>();
     static Path path = Paths.get("highscores2.txt");
 	
-	public static void starter() {
+	public static void starter(String name) {
 		final CCAProject5 app = new CCAProject5();
-		System.out.println("Please enter your name, then click enter to begin the game! If you have played previously, please use the same name as before.");
-		//gets user's name from keyboard
-		Scanner keyboard = new Scanner(System.in);
-		name = keyboard.nextLine();
-		keyboard.close();
 		app.start();
 	}
 

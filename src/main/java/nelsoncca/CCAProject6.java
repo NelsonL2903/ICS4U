@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +18,7 @@ import javax.swing.SwingConstants;
 
 public class CCAProject6 extends JPanel implements ActionListener {
 
+	String name;
 	static CCAProject6 cca6 = new CCAProject6();
 	static CCAProject5 cca5 = new CCAProject5();
 	JFrame frame;
@@ -24,6 +26,7 @@ public class CCAProject6 extends JPanel implements ActionListener {
 	JButton button;
 	JLabel title;
 	JLabel text;
+	ImageIcon image;
 
 	public static void main(String[] args) {
 
@@ -56,14 +59,20 @@ public class CCAProject6 extends JPanel implements ActionListener {
 		frame.add(title);
 		
 		text = new JLabel("Please enter your name");
-		text.setBounds(640, 25, 450, 150);
+		text.setBounds(640, 210, 450, 150);
 		frame.add(text);
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	
+		if (e.getSource()==jtf) {
+			name = jtf.getText();
+		} else if (e.getSource()==button) {
+			if ((jtf.getText().equals(""))==false) {
+				cca5.starter(name);
+			}
+		}
 	}
 
 }
