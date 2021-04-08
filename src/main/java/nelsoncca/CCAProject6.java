@@ -12,13 +12,18 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-public class CCAProject6 extends JPanel implements MouseListener, ActionListener {
+public class CCAProject6 extends JPanel implements ActionListener {
 
 	static CCAProject6 cca6 = new CCAProject6();
 	static CCAProject5 cca5 = new CCAProject5();
-	
+	JFrame frame;
+	JTextField jtf;
+	JButton button;
+	JLabel title;
+
 	public static void main(String[] args) {
 
 		cca6.gui();
@@ -27,60 +32,34 @@ public class CCAProject6 extends JPanel implements MouseListener, ActionListener
 
 	public void gui() {
 
-		// initializes the JFrame
-		JFrame frame = new JFrame("Aim Trainer");
+		frame = new JFrame("Maximize");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add(cca6);
-		frame.setSize(1000, 550);
-		frame.setLocationRelativeTo(null);
+		frame.setSize(300, 300);
+		frame.setLocation(550, 300);
+		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setLayout(null);
 		frame.setVisible(true);
-		frame.addMouseListener(cca6);
-
-		// Creates a title on the JFrame
-		JLabel title = new JLabel("Nelson's Aim Trainer!", SwingConstants.CENTER);
-		title.setPreferredSize(new Dimension(300, 100));
+		
+		jtf = new JTextField();
+		jtf.setBounds(675, 310, 150, 20);
+		jtf.addActionListener(cca6);
+		frame.add(jtf);
+		
+		button = new JButton("Start Game");
+		button.setBounds(675, 600, 200, 50);
+		button.addActionListener(cca6);
+		frame.add(button);
+		
+		title = new JLabel("Nelson's Target Practice");
+		title.setBounds(640, 25, 450, 150);
 		title.setFont(new Font("ComicSans", Font.BOLD, 25));
-		frame.getContentPane().add(title, BorderLayout.NORTH);
-
-		// creates a JButton which starts the game
-		JButton pa = new JButton("Start");
-		frame.getContentPane().add(pa, BorderLayout.SOUTH);
-		pa.addActionListener(cca6);
+		frame.add(title);
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		cca5.starter();		
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	
 	}
 
 }
