@@ -36,7 +36,6 @@ public class CCAProject6 extends JPanel implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(300, 300);
 		frame.setLocation(550, 300);
-		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setLayout(null);
 		frame.setVisible(true);
 		
