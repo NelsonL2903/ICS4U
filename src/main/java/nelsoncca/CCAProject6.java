@@ -23,6 +23,7 @@ public class CCAProject6 extends JPanel implements ActionListener {
 	JTextField jtf;
 	JButton button;
 	JLabel title;
+	JLabel text;
 
 	public static void main(String[] args) {
 
@@ -53,6 +54,10 @@ public class CCAProject6 extends JPanel implements ActionListener {
 		title.setBounds(640, 25, 450, 150);
 		title.setFont(new Font("ComicSans", Font.BOLD, 25));
 		frame.add(title);
+		
+		text = new JLabel("Please enter your name");
+		text.setBounds(640, 25, 450, 150);
+		frame.add(text);
 		
 	}
 
