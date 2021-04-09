@@ -358,15 +358,7 @@ public class CCAProject7 extends SimpleApplication implements ActionListener{
 		} else if (binding.equals("Rifle")) {
 			rifle = isPressed;
 		}
-		
-		if (e.getSource()==jtf) {
-			name = jtf.getText();
-		} else if (e.getSource()==button) {
-			if ((jtf.getText().equals(""))==false) {
-				System.out.println(name);
-				frame.dispose();
-			}
-		}
+	
 	}
 	
 	//creates the target

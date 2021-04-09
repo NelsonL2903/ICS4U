@@ -63,7 +63,6 @@ public class CCAProject4 extends SimpleApplication implements ScreenController {
 		String s = nifty.getCurrentScreen().findNiftyControl("nametextfield", TextField.class).getDisplayedText();
 		System.out.println("test method test field, displayed text is " + s);
 		System.out.println("testing");
-		nifty.
 		//cca5.starter(s);
 	}
 	
