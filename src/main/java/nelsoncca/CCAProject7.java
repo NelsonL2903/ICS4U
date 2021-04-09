@@ -1,6 +1,7 @@
 package nelsoncca;
 
 
+import java.awt.Font;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,8 +10,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.audio.AudioNode;
@@ -33,13 +38,12 @@ import com.jme3.scene.shape.Sphere;
 import com.jme3.ui.*;
 
 public class CCAProject7 extends SimpleApplication implements ActionListener{
-	//TODO reload sounds
-	//TODO shooting sounds
+	
 	/*
 	 * Aim trainer which records the amount of time it takes to hit all eight targets and shows the highscores 
 	 */
 	
-	
+	static CCAProject7 app = new CCAProject7();
 	//creates a node for for which the background is attached to
 	Node setNode = new Node("Setting Node");
 	//sets the key booleans all to false, becomes true if key is clicked
@@ -116,11 +120,17 @@ public class CCAProject7 extends SimpleApplication implements ActionListener{
     //takes the scores from all previous games, sorts, and prints out the highscores prior to any new scores being added or updated
     private List<String> lgscores = new ArrayList<String>();
     static Path path = Paths.get("highscores2.txt");
+    
+    //creates the class variables needed to setup the GUI
+    JFrame frame;
+	JTextField jtf;
+	JButton button;
+	JLabel title;
+	JLabel text;
 	
 	public static void starter(String input) {
-		name = input;
-		System.out.println(name);
-		CCAProject7 app = new CCAProject7();
+		
+		app.gui();
 		app.start();
 	}
 
@@ -347,6 +357,15 @@ public class CCAProject7 extends SimpleApplication implements ActionListener{
 			pistol = isPressed;
 		} else if (binding.equals("Rifle")) {
 			rifle = isPressed;
+		}
+		
+		if (e.getSource()==jtf) {
+			name = jtf.getText();
+		} else if (e.getSource()==button) {
+			if ((jtf.getText().equals(""))==false) {
+				System.out.println(name);
+				frame.dispose();
+			}
 		}
 	}
 	
@@ -784,4 +803,36 @@ public class CCAProject7 extends SimpleApplication implements ActionListener{
 		}
 		
 }
+	
+	public void gui() {
+
+		frame = new JFrame("Maximize");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(300, 300);
+		frame.setLocation(550, 300);
+		frame.setLayout(null);
+		frame.setVisible(true);
+		
+		jtf = new JTextField();
+		jtf.setBounds(675, 310, 150, 20);
+		jtf.addActionListener((java.awt.event.ActionListener) app);
+		frame.add(jtf);
+		
+		button = new JButton("Start Game");
+		button.setBounds(675, 600, 200, 50);
+		button.addActionListener((java.awt.event.ActionListener) app);
+		frame.add(button);
+		
+		title = new JLabel("Nelson's Target Practice");
+		title.setBounds(640, 25, 450, 150);
+		title.setFont(new Font("ComicSans", Font.BOLD, 25));
+		frame.add(title);
+		
+		text = new JLabel("Please enter your name");
+		text.setBounds(640, 210, 450, 150);
+		frame.add(text);
+		
+	}
+	
+	
 }

@@ -8,10 +8,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class CCAProject6 extends JPanel implements ActionListener {
+public class CCAProject6 implements ActionListener {
 
 	String name;
 	static CCAProject6 cca6 = new CCAProject6();
