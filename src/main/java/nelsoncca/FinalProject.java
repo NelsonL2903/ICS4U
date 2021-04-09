@@ -39,7 +39,6 @@ public class FinalProject extends SimpleApplication implements ActionListener{
 	 * Aim trainer which records the amount of time it takes to hit all eight targets and shows the highscores 
 	 */
 	
-	
 	//creates a node for for which the background is attached to
 	Node setNode = new Node("Setting Node");
 	//sets the key booleans all to false, becomes true if key is clicked
