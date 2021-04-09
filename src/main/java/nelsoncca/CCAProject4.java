@@ -1,5 +1,8 @@
 package nelsoncca;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import com.jme3.app.SimpleApplication;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
@@ -59,11 +62,13 @@ public class CCAProject4 extends SimpleApplication implements ScreenController {
 	public void testMethod2() {
 		String s = nifty.getCurrentScreen().findNiftyControl("nametextfield", TextField.class).getDisplayedText();
 		System.out.println("test method test field, displayed text is " + s);
-		cca5.starter(s);
+		System.out.println("testing");
+		//cca5.starter(s);
 	}
 	
 	public void testMethodbuttonCancel() {
 		System.exit(0);
+		
 	}
 
 }

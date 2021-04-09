@@ -7,14 +7,11 @@
 		<layer childLayout="center">
 			<panel width="25%" height="25%" align="center" valign="center"
 				childLayout="vertical" backgroundColor="#55a5" padding="10">
-				<panel height="50px" backgroundColor="#55aa" padding="10">
+				<panel height="*" childLayout="center" backgroundColor="#55aa" padding="10">
 					<!-- add your content here -->
-					<panel id="panel_top" height="25%" width="75%" align="center"
-						childLayout="center">
-						​
-						<text text="Nelson's Target Practice"
-							font="Interface/Fonts/Default.fnt" width="100%" height="100%" />
-					</panel>
+					<panel id="panel_top" height="25%" width="75%" align="center" childLayout="center">
+         ​<text text="My Cool Game" font="Interface/Fonts/Default.fnt" width="100%" height="100%" />
+         </panel>
 				</panel>
 
 				<panel height="10px" />

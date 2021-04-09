@@ -1,12 +1,8 @@
 package nelsoncca;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 public class CCAProject6 extends JPanel implements ActionListener {
 
@@ -71,7 +66,9 @@ public class CCAProject6 extends JPanel implements ActionListener {
 		} else if (e.getSource()==button) {
 			if ((jtf.getText().equals(""))==false) {
 				System.out.println(name);
+				frame.dispose();
 				cca5.starter(name);
+				cca5.start();
 			}
 		}
 	}

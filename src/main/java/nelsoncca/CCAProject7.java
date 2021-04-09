@@ -32,7 +32,7 @@ import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.ui.*;
 
-public class CCAProject5 extends SimpleApplication implements ActionListener{
+public class CCAProject7 extends SimpleApplication implements ActionListener{
 	//TODO reload sounds
 	//TODO shooting sounds
 	/*
@@ -120,7 +120,7 @@ public class CCAProject5 extends SimpleApplication implements ActionListener{
 	public static void starter(String input) {
 		name = input;
 		System.out.println(name);
-		CCAProject5 app = new CCAProject5();
+		CCAProject7 app = new CCAProject7();
 		app.start();
 	}
 
